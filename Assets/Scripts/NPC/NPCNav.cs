@@ -2,23 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class NPCNav : MonoBehaviour
 {
     NavMeshAgent navAgent;
+    Vector3 targetPosition;
 
-    // Start is called before the first frame update
+    NPCTypeStats stats;
+
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
+
+        TryApplyStatistics();
     }
 
-    // Update is called once per frame
+    void TryApplyStatistics()
+    {
+        NPCTypeStats stats = GetComponent<NPCTypeStats>() ?? null;
+        if (stats == null) return;
+
+        navAgent.speed = stats.GetPatrolSpeed();
+    }
+
     void Update()
     {
-        //navAgent.set
+        if (!HasReachedTarget()) return;
+
+        if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
+            MoveToTarget(result);
     }
 
-    bool HasRandomPoint(Vector3 pos, float range, out Vector3 result)
+    //Returns if the destination has been reached
+    bool HasReachedTarget()
+    {
+        Vector3 curPos = transform.position;
+        return Vector3.Distance(curPos, targetPosition) > 0.5f;
+    }
+
+    //Moves to the target position
+    void MoveToTarget(Vector3 pos)
+    {
+        targetPosition = pos;
+        navAgent.SetDestination(targetPosition);
+    }
+
+    void MoveToLastSeen()
+    {
+
+    }
+
+    //Finds a random point within a navmesh
+    //Returns true if a point is made with position else false and Vector3.zero
+    bool GetRandomPoint(Vector3 pos, float range, out Vector3 result)
     {
         Vector3 randomPos = pos + Random.insideUnitSphere * range;
         NavMeshHit hit;
