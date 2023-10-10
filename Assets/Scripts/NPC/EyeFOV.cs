@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EyeFOV : MonoBehaviour
 {
-    public float radius { get; private set; }
-    public float angleFOV { get; private set; }
+    public float radius;
+    public float angleFOV;
 
+    //The player to target
     [HideInInspector]
     public GameObject refPlayer;
 
@@ -25,24 +27,22 @@ public class EyeFOV : MonoBehaviour
     void Start()
     {
         refPlayer = GameObject.FindGameObjectWithTag("Player");
-        stats = GetComponent<NPCTypeStats>();
 
-        if (stats != null)
-            SetUpStatistics();
-
+        //Start searching coroutine
         StartCoroutine(SearchRoutine());
     }
 
-    void SetUpStatistics()
+    IEnumerator DoBehaviourTasks()
     {
-        radius = stats.GetRadius();
-        angleFOV = stats.GetFOV();
+        yield return null;
     }
 
+    //Handles searching
     IEnumerator SearchRoutine()
     {
         WaitForSeconds delay = new WaitForSeconds(0.2f);
 
+        //TODO: Check and functions if player was found
         while (true)
         {
             yield return delay;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4205174165395685199}
   - component: {fileID: 1563089518707231357}
   - component: {fileID: 6822115093228727381}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeR_Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 7767994837673767046}
   - component: {fileID: 5786865124761853138}
   - component: {fileID: 4394080820427564768}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 2663141524014986564}
   - component: {fileID: 934141134979160676}
   - component: {fileID: 3994985161622839593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeL_Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 3334987750629083527}
   - component: {fileID: 8883542586592606752}
   - component: {fileID: 3513289074430560482}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 7917506976530356258}
   - component: {fileID: 815409384642790279}
   - component: {fileID: 3907478973292211265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: E_Brainless
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6773b126c1ef551499a87f586be80751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navAgent: {fileID: 0}
 --- !u!114 &815409384642790279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0e580c5d25c8645a4e3eac33ea619b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 0
+  angleFOV: 0
   refPlayer: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -606,9 +609,12 @@ MonoBehaviour:
   - speed: 4.5
     fov: 55
     radius: 5.25
+    materialOverride: {fileID: 0}
   - speed: 6
     fov: 25
     radius: 5.5
+    materialOverride: {fileID: 0}
   baseSpeed: 3
   baseFOV: 45
   baseRadius: 6
+  baseDamage: 1

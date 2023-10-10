@@ -5,24 +5,15 @@ using UnityEngine.AI;
 
 public class NPCNav : MonoBehaviour
 {
-    NavMeshAgent navAgent;
+    [HideInInspector]
+    public NavMeshAgent navAgent;
     Vector3 targetPosition;
 
-    NPCTypeStats stats;
+    //NPCTypeStats stats;
 
-    void Start()
+    void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
-
-        TryApplyStatistics();
-    }
-
-    void TryApplyStatistics()
-    {
-        NPCTypeStats stats = GetComponent<NPCTypeStats>() ?? null;
-        if (stats == null) return;
-
-        navAgent.speed = stats.GetPatrolSpeed();
     }
 
     void Update()
