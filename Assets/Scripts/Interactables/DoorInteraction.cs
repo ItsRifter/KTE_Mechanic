@@ -43,10 +43,19 @@ public class DoorInteraction : MonoBehaviour
         doorStatus = startOpened ? DoorStatus.Opened : DoorStatus.Closed;
     }
 
+    Quaternion targetRotation;
+
     // Update is called once per frame
     void Update()
     {
-        
+        if(doorStatus == DoorStatus.Opening)
+        {
+
+        }
+        else if (doorStatus == DoorStatus.Closing)
+        {
+
+        }
     }
 
     /// <summary>
@@ -72,6 +81,7 @@ public class DoorInteraction : MonoBehaviour
     {
         if (doorStatus == DoorStatus.Opening || !CanInteract()) return;
 
+        targetRotation = Quaternion.Euler(0, 90, 0);
         doorStatus = DoorStatus.Opening;
     }
 
@@ -86,7 +96,8 @@ public class DoorInteraction : MonoBehaviour
     public void Close()
     {
         if (doorStatus == DoorStatus.Closed || !CanInteract()) return;
-
+        
+        targetRotation = Quaternion.Euler(0, -90, 0);
         doorStatus = DoorStatus.Closing;
     }
 
