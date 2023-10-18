@@ -14,6 +14,10 @@ public class DoorInteraction : MonoBehaviour
 
     bool isUnlocked;
 
+    //How fast the door moves on open or close
+    [SerializeField]
+    float animationSpeed = 1.0f;
+
     enum InteractMethod
     {
         Handle, //Door can be interacted with a handle
@@ -48,14 +52,34 @@ public class DoorInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(doorStatus == DoorStatus.Opening)
-        {
+        if (doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing)
+            DoAnimation();
 
-        }
-        else if (doorStatus == DoorStatus.Closing)
-        {
+        Debug.Log(doorStatus);
+    }
 
+    //Does opening/closing lerping
+    bool DoAnimation()
+    {
+        Quaternion hinge = gameObject.gameObject.transform.rotation;
+
+        hinge = Quaternion.Lerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
+
+        //Target rotation is almost equal to value, finish up and return true
+        if (Quaternion.Angle(hinge, targetRotation) < 3.0f)
+        {
+            hinge = targetRotation;
+            
+            //If the door is opening, set to opened
+            //else if closing, set to closed
+            if (doorStatus == DoorStatus.Opening) doorStatus = DoorStatus.Opened;
+            else if (doorStatus == DoorStatus.Closing) doorStatus = DoorStatus.Closed;
+
+            return true;
         }
+
+        //Animation hasn't finished yet
+        return false;
     }
 
     /// <summary>
@@ -113,13 +137,13 @@ public class DoorInteraction : MonoBehaviour
     {
         if (!CanInteract()) return;
 
-        if (doorStatus == DoorStatus.Opened) Open();
-        else if (doorStatus == DoorStatus.Closed) Close();
+        if (doorStatus == DoorStatus.Closed) Open();
+        else if (doorStatus == DoorStatus.Opened) Close();
     }
 
     /// <summary>
     /// Can this door be interacted
     /// </summary>
     /// <returns>The door can be opened or closed</returns>
-    bool CanInteract() => isUnlocked;
+    bool CanInteract() => isUnlocked && !(doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing);
 }
