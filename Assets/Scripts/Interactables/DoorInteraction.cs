@@ -44,25 +44,17 @@ public class DoorInteraction : MonoBehaviour
     {
         isUnlocked = startUnlocked;
 
-        doorStatus = startOpened ? DoorStatus.Opened : DoorStatus.Closed;
+        if (startOpened) Open(true);
+        else Close(true);
     }
 
     Quaternion targetRotation;
 
     //*PARTS OF CODE BY LIAM ACADEMY
     //Does opening/closing lerping
-    IEnumerator DoDoorAnimation()
+    /*IEnumerator DoDoorAnimation()
     {
-        Quaternion curRotation = transform.rotation;
-        Quaternion endRotation;
-
-        if(doorStatus == DoorStatus.Opening) 
-        {
-
-        }
-
-        return null;
-        /*Quaternion hinge = gameObject.transform.rotation.normalized;
+        Quaternion hinge = gameObject.transform.rotation.normalized;
 
         gameObject.transform.rotation = Quaternion.Slerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
 
@@ -83,8 +75,8 @@ public class DoorInteraction : MonoBehaviour
         }
 
         //Animation hasn't finished yet
-        return false;*/
-    }
+        return false;
+    }*/
 
     /// <summary>
     /// Unlocks the door
@@ -105,33 +97,44 @@ public class DoorInteraction : MonoBehaviour
     /// <summary>
     /// Opens the door
     /// </summary>
-    public void Open()
+    public void Open(bool forced = false)
     {
-        if (doorStatus == DoorStatus.Opening || !CanInteract()) return;
+        if(!forced)
+            if (doorStatus == DoorStatus.Opened || !CanInteract()) return;
 
-        targetRotation = Quaternion.Euler(0, 90, 0);
-        doorStatus = DoorStatus.Opening;
-    }
+        var parentTranform = transform.parent.gameObject.transform;
+        parentTranform.Rotate(0, -90, 0);
 
-    void FinishOpening()
-    {
         doorStatus = DoorStatus.Opened;
-    }    
+
+        //targetRotation = Quaternion.Euler(0, 90, 0);
+        //doorStatus = DoorStatus.Opening;
+    }  
 
     /// <summary>
     /// Closes the door
     /// </summary>
-    public void Close()
+    public void Close(bool forced = false)
     {
-        if (doorStatus == DoorStatus.Closed || !CanInteract()) return;
-        
-        targetRotation = Quaternion.Euler(0, -90, 0);
-        doorStatus = DoorStatus.Closing;
+        if(!forced)
+            if (doorStatus == DoorStatus.Closed || !CanInteract()) return;
+
+        var parentTranform = transform.parent.gameObject.transform;
+        parentTranform.Rotate(0, 0, 0);
+
+        doorStatus = DoorStatus.Closed;
+
+        //targetRotation = Quaternion.Euler(0, -90, 0);
+        //doorStatus = DoorStatus.Closing;
     }
 
     void FinishClosing()
     {
         doorStatus = DoorStatus.Closed;
+    }
+    void FinishOpening()
+    {
+        doorStatus = DoorStatus.Opened;
     }
 
     /// <summary>
@@ -141,12 +144,10 @@ public class DoorInteraction : MonoBehaviour
     {
         if (!CanInteract()) return;
 
-        Debug.Log("Door doing stuff");
-
         if (doorStatus == DoorStatus.Closed) Open();
         else if (doorStatus == DoorStatus.Opened) Close();
 
-        StartCoroutine(DoDoorAnimation());
+        //StartCoroutine(DoDoorAnimation());
     }
 
     /// <summary>

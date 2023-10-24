@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EyeFOV : MonoBehaviour
 {
@@ -90,12 +88,14 @@ public class EyeFOV : MonoBehaviour
             {
                 float distToTarget = Vector3.Distance(transform.position, target.position);
 
+                //Check if we can or can't see the player, set bool accordingly to result
                 if (!Physics.Raycast(transform.position, targetDir, distToTarget, obstructMasks))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
             }
         }
+        //If the NPC did see the player but lost sight, set bool to false
         else if (canSeePlayer)
             canSeePlayer = false;
     }
