@@ -15,8 +15,8 @@ public class NPCTypeStats : MonoBehaviour
 {
     //Allows variants of this npc type
     //MIGHT NOT BE NEEDED
-    [SerializeField, Tooltip("Can this NPC have different variants")]
-    bool allowVariants = false;
+    //[SerializeField, Tooltip("Can this NPC have different variants")]
+    //bool allowVariants = false;
 
     //The variants of this npc, used for spawning
     [SerializeField]
@@ -34,7 +34,7 @@ public class NPCTypeStats : MonoBehaviour
 
     public float baseDamage = 1.0f;
 
-    bool isVariant;
+    //bool isVariant;
 
     enum BehavingStatus
     {

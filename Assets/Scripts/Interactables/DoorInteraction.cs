@@ -49,26 +49,30 @@ public class DoorInteraction : MonoBehaviour
 
     Quaternion targetRotation;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing)
-            DoAnimation();
-
-        Debug.Log(doorStatus);
-    }
-
+    //*PARTS OF CODE BY LIAM ACADEMY
     //Does opening/closing lerping
-    bool DoAnimation()
+    IEnumerator DoDoorAnimation()
     {
-        Quaternion hinge = gameObject.gameObject.transform.rotation;
+        Quaternion curRotation = transform.rotation;
+        Quaternion endRotation;
 
-        hinge = Quaternion.Lerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
+        if(doorStatus == DoorStatus.Opening) 
+        {
+
+        }
+
+        return null;
+        /*Quaternion hinge = gameObject.transform.rotation.normalized;
+
+        gameObject.transform.rotation = Quaternion.Slerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
+
+        Debug.Log(gameObject.transform.rotation);
+        Debug.Log(targetRotation);
 
         //Target rotation is almost equal to value, finish up and return true
         if (Quaternion.Angle(hinge, targetRotation) < 3.0f)
         {
-            hinge = targetRotation;
+            //hinge = targetRotation;
             
             //If the door is opening, set to opened
             //else if closing, set to closed
@@ -79,7 +83,7 @@ public class DoorInteraction : MonoBehaviour
         }
 
         //Animation hasn't finished yet
-        return false;
+        return false;*/
     }
 
     /// <summary>
@@ -137,8 +141,12 @@ public class DoorInteraction : MonoBehaviour
     {
         if (!CanInteract()) return;
 
+        Debug.Log("Door doing stuff");
+
         if (doorStatus == DoorStatus.Closed) Open();
         else if (doorStatus == DoorStatus.Opened) Close();
+
+        StartCoroutine(DoDoorAnimation());
     }
 
     /// <summary>

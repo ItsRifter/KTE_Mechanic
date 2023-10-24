@@ -23,10 +23,17 @@ public class EyeFOV : MonoBehaviour
 
     NPCTypeStats stats;
 
-    // Start is called before the first frame update
+    const float huntTime = 10.0f;
+    float huntTimePassed;
+
+    NPCNav navAgent;
+
     void Start()
     {
         refPlayer = GameObject.FindGameObjectWithTag("Player");
+        navAgent = GetComponent<NPCNav>();
+
+        huntTimePassed = 0;
 
         //Start searching coroutine
         StartCoroutine(SearchRoutine());
@@ -43,10 +50,30 @@ public class EyeFOV : MonoBehaviour
         WaitForSeconds delay = new WaitForSeconds(0.2f);
 
         //TODO: Check and functions if player was found
-        while (true)
+        while (!canSeePlayer)
         {
             yield return delay;
             FOVCheck();
+
+            if (canSeePlayer)
+            {
+                navAgent.MoveToTarget(refPlayer.transform.position);
+                break;
+            }
+        }
+
+        while(canSeePlayer)
+        {
+            yield return delay;
+            FOVCheck();
+
+            if (canSeePlayer)
+                navAgent.MoveToTarget(refPlayer.transform.position);
+            else
+            {
+                navAgent.MoveToLastSeen(refPlayer.transform.position);
+                break;
+            }
         }
     }
 

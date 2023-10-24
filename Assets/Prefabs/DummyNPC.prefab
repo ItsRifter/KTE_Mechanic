@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4462083750181969905}
   - component: {fileID: 1381449019819733113}
   - component: {fileID: 3212165986472212870}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeR_Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 2349089970404304002}
   - component: {fileID: 6164374920209724641}
   - component: {fileID: 630057553798732320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 1935780549748096372}
   - component: {fileID: 2509858181883682257}
   - component: {fileID: 528136602534981426}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DummyNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,6 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6773b126c1ef551499a87f586be80751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navAgent: {fileID: 0}
 --- !u!114 &2509858181883682257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0e580c5d25c8645a4e3eac33ea619b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 0
+  angleFOV: 0
   refPlayer: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -391,9 +394,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowVariants: 0
+  variants: []
   baseSpeed: 3
   baseFOV: 45
   baseRadius: 5
+  baseDamage: 1
 --- !u!1 &9048012928582964990
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +411,7 @@ GameObject:
   - component: {fileID: 8411509376129033465}
   - component: {fileID: 2551846449370330212}
   - component: {fileID: 8747295925541584565}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeL_Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -511,7 +516,7 @@ GameObject:
   - component: {fileID: 8829845647792853452}
   - component: {fileID: 3736530206499183171}
   - component: {fileID: 4004857356183538948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Placeholder_EyeR
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 
 public class NPCNav : MonoBehaviour
 {
@@ -32,15 +33,17 @@ public class NPCNav : MonoBehaviour
     }
 
     //Moves to the target position
-    void MoveToTarget(Vector3 pos)
+    public void MoveToTarget(Vector3 pos)
     {
         targetPosition = pos;
         navAgent.SetDestination(targetPosition);
     }
 
-    void MoveToLastSeen()
+    public void MoveToLastSeen(Vector3 lastPos)
     {
-
+        //TODO: change state to hunting after reaching last seen position
+        targetPosition = lastPos;
+        navAgent.SetDestination(targetPosition);
     }
 
     //Finds a random point within a navmesh
