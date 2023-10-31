@@ -7,8 +7,6 @@ public class NPCNav : MonoBehaviour
     public NavMeshAgent navAgent;
     Vector3 targetPosition;
 
-    //NPCTypeStats stats;
-
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class HealthStatistic : MonoBehaviour
 {
@@ -27,7 +27,9 @@ public class HealthStatistic : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         curHealth -= dmg;
-        
+
+        Debug.Log($"Took {dmg} | Health {curHealth}");
+
         //When the player has no health, do dying functions
         if (curHealth <= 0)
             OnKilled();
@@ -36,6 +38,6 @@ public class HealthStatistic : MonoBehaviour
     //Performs death functions
     void OnKilled()
     {
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

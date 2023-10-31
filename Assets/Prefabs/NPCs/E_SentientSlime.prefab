@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 815409384642790279}
   - component: {fileID: 3907478973292211265}
   m_Layer: 7
-  m_Name: E_Brute
+  m_Name: E_SentientSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -455,8 +455,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.95000005, z: -4.88}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7336941245176411183}
   - {fileID: 3828669589141938192}
@@ -490,7 +490,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: db1243162b65b894898c17caeb2230cf, type: 2}
+  - {fileID: 2100000, guid: 88e96bc3751f183448e8a415c4c40f49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -604,9 +604,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304e9b825633ff74ab6052f15eeaab7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowVariants: 0
-  variants: []
+  navAgent: {fileID: 0}
+  refPlayer: {fileID: 0}
   baseSpeed: 5
   baseFOV: 55
   baseRadius: 8
-  baseDamage: 1
+  baseDamage: 15
+  attackRange: 1.5
+  attackTime: 1

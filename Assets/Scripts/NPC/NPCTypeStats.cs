@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public struct VariantType
@@ -13,14 +14,11 @@ public struct VariantType
 
 public class NPCTypeStats : MonoBehaviour
 {
-    //Allows variants of this npc type
-    //MIGHT NOT BE NEEDED
-    //[SerializeField, Tooltip("Can this NPC have different variants")]
-    //bool allowVariants = false;
+    [HideInInspector]
+    public NavMeshAgent navAgent;
 
-    //The variants of this npc, used for spawning
-    [SerializeField]
-    VariantType[] variants;
+    [HideInInspector]
+    public GameObject refPlayer;
 
     //The base speed of this type
     public float baseSpeed = 6.0f;
@@ -34,7 +32,12 @@ public class NPCTypeStats : MonoBehaviour
 
     public float baseDamage = 1.0f;
 
-    //bool isVariant;
+    public float attackRange = 1.5f;
+
+    [SerializeField]
+    float attackTime = 1.0f;
+
+    float lastAttackTime;
 
     enum BehavingStatus
     {
@@ -48,12 +51,46 @@ public class NPCTypeStats : MonoBehaviour
     
     void Awake()
     {
-        float chance = Random.Range(0.1f, 100.0f);
+
     }
 
     void Start()
     {
+        refPlayer = GameObject.FindGameObjectWithTag("Player");
         SetStats();
+    }
+
+    void Update()
+    {
+        if (lastAttackTime < attackTime)
+        {
+            lastAttackTime += 1.0f * Time.deltaTime;
+            lastAttackTime = Mathf.Clamp(lastAttackTime, 0.0f, attackTime);
+        }
+
+        if (CanAttackPlayer())
+            AttackPlayer();
+    }
+
+    bool CanAttackPlayer()
+    {
+        float distToPlayer = Vector3.Distance(transform.position, refPlayer.transform.position);
+
+        if (distToPlayer <= attackRange && lastAttackTime >= attackTime)
+            return true;
+
+        return false;
+    }
+
+    void AttackPlayer()
+    {
+        HealthStatistic hp = refPlayer.GetComponent<HealthStatistic>();
+
+        if (lastAttackTime < attackTime) return;
+        if ( hp.curHealth <= 0.0f ) return;
+
+        lastAttackTime = 0f;
+        hp.TakeDamage(baseDamage);
     }
 
     //Sets statistics to this NPC
