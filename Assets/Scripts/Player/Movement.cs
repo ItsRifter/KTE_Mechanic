@@ -30,7 +30,6 @@ public class Movement : MonoBehaviour
     {
         //Do any move inputs from the player
         HandleMovement();
-        Debug.Log(curStamina);
     }
 
     void HandleMovement()
