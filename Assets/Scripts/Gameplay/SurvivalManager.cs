@@ -6,7 +6,8 @@ public class SurvivalManager : MonoBehaviour
 {
     float timeSurvived;
 
-    const float startTimeInterval = 25.0f;
+    const float startTimeInterval = 5.0f;
+    //const float startTimeInterval = 25.0f;
 
     float curTimeInterval;
 

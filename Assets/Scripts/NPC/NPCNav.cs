@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,17 +8,43 @@ public class NPCNav : MonoBehaviour
     public NavMeshAgent navAgent;
     Vector3 targetPosition;
 
+    bool isActive = false;
+
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        StartCoroutine(SetupNavigation());
     }
+
+    IEnumerator SetupNavigation()
+    {
+        yield return new WaitForSeconds(1.0f);
+        isActive = true;
+    }
+
+    Vector3 ApplyGravity()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.1f, NavMesh.AllAreas))
+            return Vector3.zero;
+
+        return Vector3.down * Time.deltaTime;
+    }
+
+    bool forceStop;
 
     void Update()
     {
-        if (!HasReachedTarget()) return;
+        if (forceStop) return;
 
-        if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
-            MoveToTarget(result);
+        if (!isActive)
+            transform.position += ApplyGravity();
+        else
+        {
+            if (!HasReachedTarget()) return;
+
+            if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
+                MoveToTarget(result);
+        }
     }
 
     //Returns if the destination has been reached

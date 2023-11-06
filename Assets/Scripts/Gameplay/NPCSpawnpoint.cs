@@ -43,8 +43,7 @@ public class NPCSpawnpoint : MonoBehaviour
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 8.0f, NavMesh.AllAreas))
         {
-            Vector3 point = hit.position + Vector3.up * 1.0f;
-            Instantiate(npc, point, transform.localRotation);
+            Instantiate(npc, hit.position, transform.localRotation);
         }
     }
 
