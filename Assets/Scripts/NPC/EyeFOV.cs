@@ -25,10 +25,10 @@ public class EyeFOV : MonoBehaviour
     float huntTimePassed;
 
     NPCNav navAgent;
-
+    
     void Start()
     {
-        refPlayer = GameObject.FindGameObjectWithTag("Player");
+        refPlayer = SurvivalManager.GetPlayerReference();
         navAgent = GetComponent<NPCNav>();
 
         huntTimePassed = 0;

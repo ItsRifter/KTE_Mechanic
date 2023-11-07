@@ -11,13 +11,13 @@ public class HealthStatistic : MonoBehaviour
 
     //How much health does the player currently have
     [HideInInspector]
-    public float curHealth { get; private set; }
+    public float CurHealth { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         //Set health to starting value
-        curHealth = startHealth;
+        CurHealth = startHealth;
     }
 
     /// <summary>
@@ -26,12 +26,12 @@ public class HealthStatistic : MonoBehaviour
     /// <param name="dmg">The amount of damage to deal</param>
     public void TakeDamage(float dmg)
     {
-        curHealth -= dmg;
+        CurHealth -= dmg;
 
-        Debug.Log($"Took {dmg} | Health {curHealth}");
+        Debug.Log($"Took {dmg} | Health {CurHealth}");
 
         //When the player has no health, do dying functions
-        if (curHealth <= 0)
+        if (CurHealth <= 0)
             OnKilled();
     }
 

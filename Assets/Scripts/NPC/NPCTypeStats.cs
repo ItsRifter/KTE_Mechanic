@@ -87,7 +87,7 @@ public class NPCTypeStats : MonoBehaviour
         HealthStatistic hp = refPlayer.GetComponent<HealthStatistic>();
 
         if (lastAttackTime < attackTime) return;
-        if ( hp.curHealth <= 0.0f ) return;
+        if ( hp.CurHealth <= 0.0f ) return;
 
         lastAttackTime = 0f;
         hp.TakeDamage(baseDamage);

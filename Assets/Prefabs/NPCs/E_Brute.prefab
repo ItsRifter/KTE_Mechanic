@@ -543,7 +543,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8651793253527143954}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 2
@@ -606,9 +606,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
   refPlayer: {fileID: 0}
-  baseSpeed: 5
+  baseSpeed: 2
   baseFOV: 55
   baseRadius: 8
   baseDamage: 25
   attackRange: 1.5
-  attackTime: 1
+  attackTime: 2.5

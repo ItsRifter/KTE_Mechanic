@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class SurvivalManager : MonoBehaviour
 {
-    float timeSurvived;
+    float timeSurvived = -10.0f;
 
-    const float startTimeInterval = 5.0f;
-    //const float startTimeInterval = 25.0f;
+    const float startTimeInterval = 25.0f;
 
     float curTimeInterval;
 
@@ -17,6 +16,9 @@ public class SurvivalManager : MonoBehaviour
     float[] intervalAdjusts = new float[] { 22.5f, 16.0f, 8.25f };
 
     int curStage;
+
+    public static GameObject GetPlayerReference() 
+        => GameObject.FindGameObjectWithTag("Player");
 
     void Start()
     {
@@ -32,8 +34,6 @@ public class SurvivalManager : MonoBehaviour
         if (IsPlayerAlive())
             timeSurvived += 1.0f * Time.deltaTime;
         else return;
-
-        Debug.Log($"Time: {Math.Round(timeSurvived, 2)}");
 
         //If a time intevral has been met..
         if (Math.Round(timeSurvived, 2) % curTimeInterval == 0 && canSpawn)
@@ -70,5 +70,5 @@ public class SurvivalManager : MonoBehaviour
 
     //Returns if the player is alive
     bool IsPlayerAlive() 
-        => GameObject.FindGameObjectWithTag("Player").GetComponent<HealthStatistic>().curHealth > 0.0f;
+        => GameObject.FindGameObjectWithTag("Player").GetComponent<HealthStatistic>().CurHealth > 0.0f;
 }
