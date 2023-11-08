@@ -18,7 +18,7 @@ public class NPCNav : MonoBehaviour
 
     IEnumerator SetupNavigation()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         isActive = true;
     }
 
@@ -32,15 +32,26 @@ public class NPCNav : MonoBehaviour
 
     bool forceStop;
 
+    bool IsNearPlayer()
+    {
+        GameObject player = SurvivalManager.GetPlayerReference();
+        float radius = NPCTypeStatExtensions.GetNPCStatistics(gameObject).GetRadius() / 2.5f;
+
+        return Vector3.Distance(transform.position, player.transform.position) <= radius;
+    }
+
     void Update()
     {
         if (forceStop) return;
 
         if (!isActive)
+            //Try to put NPC on ground to prevent seeing object floating
             transform.position += ApplyGravity();
         else
         {
             if (!HasReachedTarget()) return;
+
+            navAgent.isStopped = IsNearPlayer();
 
             if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
                 MoveToTarget(result);

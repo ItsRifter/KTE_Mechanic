@@ -35,6 +35,14 @@ public class HealthStatistic : MonoBehaviour
             OnKilled();
     }
 
+    public void SetHealth(float setHP)
+    {
+        CurHealth = setHP;
+
+        if (CurHealth <= 0)
+            OnKilled();
+    }
+
     //Performs death functions
     void OnKilled()
     {

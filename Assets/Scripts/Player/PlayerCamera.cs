@@ -22,6 +22,9 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Console is enabled, stop here
+        if (GameConsole.consoleInstance.showConsole) return;
+
         DoCameraLooking();
         HandleInteracting();
     }

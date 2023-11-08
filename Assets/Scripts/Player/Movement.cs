@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     const float stamina = 10.0f;
 
     [HideInInspector]
-    public float CurStamina;
+    public float curStamina;
 
     //The character controller for any movements
     CharacterController controller;
@@ -24,12 +24,15 @@ public class Movement : MonoBehaviour
     {
         //Get the character controller component
         controller = GetComponent<CharacterController>();
-        CurStamina = stamina;
+        curStamina = stamina;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Console is enabled, stop here
+        if (GameConsole.consoleInstance.showConsole) return;
+
         //Do any move inputs from the player
         HandleMovement();
     }
@@ -52,10 +55,10 @@ public class Movement : MonoBehaviour
 
     float GetSpeed()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && CurStamina > 0.0f)
+        if (Input.GetKey(KeyCode.LeftShift) && curStamina > 0.0f)
         {
-            CurStamina -= 2f * Time.deltaTime;
-            CurStamina = Mathf.Clamp(CurStamina, 0, stamina);
+            curStamina -= 2f * Time.deltaTime;
+            curStamina = Mathf.Clamp(curStamina, 0, stamina);
 
             return runSpeed;
         }
@@ -65,9 +68,9 @@ public class Movement : MonoBehaviour
 
     void RegenStamina()
     {
-        if (Input.GetKey(KeyCode.LeftShift) || CurStamina == stamina) return;
+        if (Input.GetKey(KeyCode.LeftShift) || curStamina == stamina) return;
 
-        CurStamina += 0.5f * Time.deltaTime;
-        CurStamina = Mathf.Clamp(CurStamina, 0, stamina);
+        curStamina += 0.5f * Time.deltaTime;
+        curStamina = Mathf.Clamp(curStamina, 0, stamina);
     }
 }

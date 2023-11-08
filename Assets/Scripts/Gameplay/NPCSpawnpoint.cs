@@ -14,6 +14,9 @@ public class NPCSpawnpoint : MonoBehaviour
     [SerializeField]
     Object brute;
 
+    [Tooltip("Radius check for spawning if player is too close")]
+    public float radius = 12.0f;
+
     /// <summary>
     /// Enum of NPC types
     /// </summary>
@@ -66,8 +69,11 @@ public class NPCSpawnpoint : MonoBehaviour
     /// <returns>A npc spawnpoint found or null</returns>
     public static NPCSpawnpoint FindRandomSpawnpoint()
     {
-        //Group all spawnpoints into a list
-        List<NPCSpawnpoint> spawnpoints = FindObjectsByType<NPCSpawnpoint>(FindObjectsSortMode.None).ToList();
+        //Group all spawnpoints that can spawn NPCs into a list
+        List<NPCSpawnpoint> spawnpoints = FindObjectsByType<NPCSpawnpoint>(FindObjectsSortMode.None)
+            //Picks points that can spawn, ones that return false are rejected
+            .Where(s => s.CanSpawn())
+            .ToList();
 
         //Get the max amount of spawns available
         int maxSpawns = spawnpoints.Count;
@@ -77,11 +83,19 @@ public class NPCSpawnpoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Can an NPC be spawned at this point? E.G, is not in LoS or is distant from player
+    /// Can an NPC be spawned at this point? E.G, is distant from the player
     /// </summary>
     /// <returns>If spawning can occur</returns>
     bool CanSpawn()
     {
-        return true;
+        //Get the player transform position
+        var playerPos = SurvivalManager.GetPlayerReference().transform.position;
+
+        if(Physics.Raycast(transform.position, playerPos, out RaycastHit hit))
+            //If the player is in LoS of spawnpoint regardless of radius, return false
+            if (hit.collider.gameObject.tag == "Player") return false;
+
+        //True if player is further away from radius check
+        return Vector3.Distance(transform.position, playerPos) > radius;
     }
 }

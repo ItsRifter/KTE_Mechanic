@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+//Preferably a game manager but handles surviving
 public class SurvivalManager : MonoBehaviour
 {
     float timeSurvived = -10.0f;
@@ -10,26 +11,44 @@ public class SurvivalManager : MonoBehaviour
 
     float curTimeInterval;
 
-    int timesSpawnedNPC;
+    int timesSpawnedNPC = 0;
 
     int[] difficultyTweaks = new int[] { 4, 9, 16, 20 };
     float[] intervalAdjusts = new float[] { 22.5f, 16.0f, 8.25f };
 
     int curStage;
 
+    /// <summary>
+    /// Gets the player game object
+    /// </summary>
     public static GameObject GetPlayerReference() 
         => GameObject.FindGameObjectWithTag("Player");
 
+    public static SurvivalManager survivalInstance;
+
     void Start()
     {
+        survivalInstance = this;
+
         curTimeInterval = startTimeInterval;
         curStage = 0;
     }
 
-    bool canSpawn;
+    bool canSpawn = false;
+
+    //Pauses survival timer, this also pauses NPC spawning
+    [HideInInspector]
+    public bool pauseTimer = false;
 
     void Update()
     {
+        //Toggles game console
+        if (Input.GetKeyDown(KeyCode.F1))
+            GameConsole.ToggleConsole();
+
+        //Stop here if the timer is paused
+        if (pauseTimer) return;
+
         //If player is alive increase timer otherwise stop here
         if (IsPlayerAlive())
             timeSurvived += 1.0f * Time.deltaTime;
@@ -52,7 +71,7 @@ public class SurvivalManager : MonoBehaviour
             }
 
             canSpawn = false;
-        } 
+        }
         else
             canSpawn = true;
     }
@@ -60,8 +79,6 @@ public class SurvivalManager : MonoBehaviour
     //Spawns a NPC at a random spawnpoint
     void SpawnNPC()
     {
-        Debug.Log("Spawning NPC");
-
         var point = NPCSpawnpoint.FindRandomSpawnpoint();
         point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Brainless);
 
@@ -69,6 +86,6 @@ public class SurvivalManager : MonoBehaviour
     }
 
     //Returns if the player is alive
-    bool IsPlayerAlive() 
-        => GameObject.FindGameObjectWithTag("Player").GetComponent<HealthStatistic>().CurHealth > 0.0f;
+    bool IsPlayerAlive()
+        => GetPlayerReference().GetComponent<HealthStatistic>().CurHealth > 0.0f;
 }

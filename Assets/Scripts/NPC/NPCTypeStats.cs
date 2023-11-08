@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,13 +13,20 @@ public struct VariantType
     public Material materialOverride;
 }
 
-public class NPCTypeStats : MonoBehaviour
+public static class NPCTypeStatExtensions
+{
+    /// <summary>
+    /// Gets NPC statistics if valid or null
+    /// </summary>
+    /// <param name="gameObj">The object to get statistics</param>
+    /// <returns>The statistics for this NPC game object</returns>
+    public static NPCTypeStats GetNPCStatistics(this GameObject gameObj) => gameObj.GetComponent<NPCTypeStats>() ?? null;
+}
+
+public class NPCTypeStats : MonoBehaviour, ISingleton
 {
     [HideInInspector]
     public NavMeshAgent navAgent;
-
-    [HideInInspector]
-    public GameObject refPlayer;
 
     //The base speed of this type
     public float baseSpeed = 6.0f;
@@ -30,15 +38,20 @@ public class NPCTypeStats : MonoBehaviour
     //The viewing radius of how far the type can see
     public float baseRadius = 5.0f;
 
+    //How much damage to deal
     public float baseDamage = 1.0f;
+    
+    //The time for a new attack to occur
+    public float attackTime = 1.0f;
 
+    //How far does the attack reach
     public float attackRange = 1.5f;
-
-    [SerializeField]
-    float attackTime = 1.0f;
 
     float lastAttackTime;
 
+    GameObject refPlayer;
+
+    /* LIKELY NOT NEEDED
     enum BehavingStatus
     {
         None, //NPC is inactive
@@ -47,8 +60,8 @@ public class NPCTypeStats : MonoBehaviour
         Attacking //Sees the player and is attacking
     }
 
-    BehavingStatus curBehaviour;
-    
+    BehavingStatus curBehaviour;*/
+
     void Awake()
     {
 
@@ -56,7 +69,7 @@ public class NPCTypeStats : MonoBehaviour
 
     void Start()
     {
-        refPlayer = GameObject.FindGameObjectWithTag("Player");
+        refPlayer = SurvivalManager.GetPlayerReference();
         SetStats();
     }
 

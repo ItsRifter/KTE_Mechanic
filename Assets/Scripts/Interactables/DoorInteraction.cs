@@ -14,10 +14,6 @@ public class DoorInteraction : MonoBehaviour
 
     bool isUnlocked;
 
-    //How fast the door moves on open or close
-    [SerializeField]
-    float animationSpeed = 1.0f;
-
     enum InteractMethod
     {
         Handle, //Door can be interacted with a handle

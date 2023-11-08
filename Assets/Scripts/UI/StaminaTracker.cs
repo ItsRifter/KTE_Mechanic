@@ -19,17 +19,17 @@ public class StaminaTracker : MonoBehaviour
 
     float GetPlayerStamina()
         => SurvivalManager.GetPlayerReference()
-        .gameObject.GetComponent<Movement>().CurStamina;
+        .gameObject.GetComponent<Movement>().curStamina;
 
     // Update is called once per frame
     void Update()
     {
-        float newHealth = GetPlayerStamina();
+        float newStamina = GetPlayerStamina();
 
-        if (lastValue != newHealth)
-            lastValue = newHealth;
+        if (lastValue != newStamina)
+            lastValue = newStamina;
         else return;
 
-        staminaSlider.value = lastValue * 10;
+        staminaSlider.value = lastValue / 10;
     }
 }

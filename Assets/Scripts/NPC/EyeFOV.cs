@@ -19,11 +19,6 @@ public class EyeFOV : MonoBehaviour
     [HideInInspector]
     public bool canSeePlayer;
 
-    NPCTypeStats stats;
-
-    const float huntTime = 10.0f;
-    float huntTimePassed;
-
     NPCNav navAgent;
     
     void Start()
@@ -31,15 +26,8 @@ public class EyeFOV : MonoBehaviour
         refPlayer = SurvivalManager.GetPlayerReference();
         navAgent = GetComponent<NPCNav>();
 
-        huntTimePassed = 0;
-
         //Start searching coroutine
         StartCoroutine(SearchRoutine());
-    }
-
-    IEnumerator DoBehaviourTasks()
-    {
-        yield return null;
     }
 
     //Handles searching
