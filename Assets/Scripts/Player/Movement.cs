@@ -39,6 +39,9 @@ public class Movement : MonoBehaviour
 
     void HandleMovement()
     {
+        if (!IsGrounded())
+            ApplyGravity();
+
         RegenStamina();
 
         //Get both inputs
@@ -73,4 +76,13 @@ public class Movement : MonoBehaviour
         curStamina += 0.5f * Time.deltaTime;
         curStamina = Mathf.Clamp(curStamina, 0, stamina);
     }
+
+    //Returns if the player is grounded
+    bool IsGrounded()
+    {
+        Vector3 point = GameObject.Find("PlayerGround").transform.position;
+        return Physics.Raycast(point, Vector3.down, 0.1f, LayerMask.GetMask("Walkable"));
+    }
+
+    void ApplyGravity() => transform.position += Vector3.down * (Time.deltaTime * 9.81f);
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -16,6 +17,10 @@ public class SurvivalManager : MonoBehaviour
     int[] difficultyTweaks = new int[] { 4, 9, 16, 20 };
     float[] intervalAdjusts = new float[] { 22.5f, 16.0f, 8.25f };
 
+    //Spawns a specific NPC based on how many have spawned previously
+    //E.G: If game spawned 3 NPC's and this will spawn on the 4th, use the NPC type for that time
+    Dictionary<int, NPCSpawnpoint.NPCToSpawn> spawnUniqueNPCs = new Dictionary<int, NPCSpawnpoint.NPCToSpawn>();
+
     int curStage;
 
     /// <summary>
@@ -28,13 +33,27 @@ public class SurvivalManager : MonoBehaviour
 
     void Start()
     {
+        SetNPCSpawnTimes();
+
         survivalInstance = this;
 
         curTimeInterval = startTimeInterval;
         curStage = 0;
     }
 
-    bool canSpawn = false;
+    bool canSpawn = true;
+
+    //Makes an NPC spawn based on how many have spawned previously
+    //THIS IS NOT SPAWN TIME INTERVALS
+    void SetNPCSpawnTimes()
+    {
+        //BioOrganics
+        spawnUniqueNPCs.Add(3, NPCSpawnpoint.NPCToSpawn.BioOrganic);
+        spawnUniqueNPCs.Add(6, NPCSpawnpoint.NPCToSpawn.BioOrganic);
+
+        //Brutes
+        spawnUniqueNPCs.Add(11, NPCSpawnpoint.NPCToSpawn.Brute);
+    }
 
     //Pauses survival timer, this also pauses NPC spawning
     [HideInInspector]
@@ -59,6 +78,7 @@ public class SurvivalManager : MonoBehaviour
         {
             //Spawn a new NPC
             SpawnNPC();
+            canSpawn = false;
 
             //If enough NPCs have spawned, increase the difficulty
             if (difficultyTweaks.Contains(timesSpawnedNPC))
@@ -69,10 +89,8 @@ public class SurvivalManager : MonoBehaviour
                 curTimeInterval = intervalAdjusts[curStage];
                 curStage++;
             }
-
-            canSpawn = false;
         }
-        else
+        else if (Math.Round(timeSurvived, 2) % curTimeInterval == 1)
             canSpawn = true;
     }
 
@@ -80,7 +98,16 @@ public class SurvivalManager : MonoBehaviour
     void SpawnNPC()
     {
         var point = NPCSpawnpoint.FindRandomSpawnpoint();
-        point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Brainless);
+
+        if (spawnUniqueNPCs.Any(k => k.Key == timesSpawnedNPC))
+            point.SpawnNPC(spawnUniqueNPCs[timesSpawnedNPC]);
+        else
+        {
+            if (timesSpawnedNPC < 11)
+                point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Brainless);
+            else
+                point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Random);
+        }
 
         timesSpawnedNPC++;
     }
