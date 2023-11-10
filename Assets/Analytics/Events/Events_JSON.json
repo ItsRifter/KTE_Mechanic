@@ -1,0 +1,26 @@
+[
+  {
+    "eventTimestamp": "10/11/2023 15:45:17",
+    "userID": "Tester",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "3c3a851b86b640bdef8cf33755ba2762",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Dummy",
+      "timeSurvived": 24.13,
+      "distanceTravelled": 86.643425
+    }
+  },
+  {
+    "eventTimestamp": "10/11/2023 15:50:40",
+    "userID": "Bobby",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "86090b29f4d0bfb09e2baf4a215b15c7",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Brainless",
+      "timeSurvived": 39.46,
+      "distanceTravelled": 14.0
+    }
+  }
+]

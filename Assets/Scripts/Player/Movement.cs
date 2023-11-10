@@ -33,6 +33,9 @@ public class Movement : MonoBehaviour
         //Console is enabled, stop here
         if (GameConsole.consoleInstance.showConsole) return;
 
+        //If controls are disabled, stop here
+        if (!HealthStatistic.allowControls) return;
+
         //Do any move inputs from the player
         HandleMovement();
     }
@@ -43,6 +46,8 @@ public class Movement : MonoBehaviour
             ApplyGravity();
 
         RegenStamina();
+
+        AnalyticTracker.instance.UpdateDistanceTravelled(transform.position);
 
         //Get both inputs
         float moveX = Input.GetAxisRaw("Horizontal");

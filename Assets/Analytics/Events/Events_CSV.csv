@@ -1,0 +1,3 @@
+Timestamp,UserID,Event Name,UUID,Param/killer,Param/timeSurvived,Param/distanceTravelled
+10/11/2023 15:45:17,Tester,SurviveAttempt,3c3a851b86b640bdef8cf33755ba2762,Dummy,24.13,86.643425
+10/11/2023 15:50:40,Bobby,SurviveAttempt,86090b29f4d0bfb09e2baf4a215b15c7,Brainless,39.46,14

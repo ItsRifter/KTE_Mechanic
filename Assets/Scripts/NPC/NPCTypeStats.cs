@@ -25,6 +25,8 @@ public static class NPCTypeStatExtensions
 
 public class NPCTypeStats : MonoBehaviour, ISingleton
 {
+    public string npcName = "Dummy";
+
     [HideInInspector]
     public NavMeshAgent navAgent;
 
@@ -100,10 +102,10 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
         HealthStatistic hp = refPlayer.GetComponent<HealthStatistic>();
 
         if (lastAttackTime < attackTime) return;
-        if ( hp.CurHealth <= 0.0f ) return;
+        if (hp == null || hp.CurHealth <= 0.0f ) return;
 
         lastAttackTime = 0f;
-        hp.TakeDamage(baseDamage);
+        hp.TakeDamage(baseDamage, gameObject);
     }
 
     //Sets statistics to this NPC

@@ -6,7 +6,8 @@ using UnityEngine;
 //Preferably a game manager but handles surviving
 public class SurvivalManager : MonoBehaviour
 {
-    float timeSurvived = -10.0f;
+    [HideInInspector]
+    public float timeSurvived = -10.0f;
 
     const float startTimeInterval = 25.0f;
 
@@ -29,13 +30,18 @@ public class SurvivalManager : MonoBehaviour
     public static GameObject GetPlayerReference() 
         => GameObject.FindGameObjectWithTag("Player");
 
-    public static SurvivalManager survivalInstance;
+    //Pauses survival timer, this also pauses NPC spawning
+    [HideInInspector]
+    public bool pauseTimer = true;
+
+    public static SurvivalManager instance;
 
     void Start()
     {
         SetNPCSpawnTimes();
+        pauseTimer = true;
 
-        survivalInstance = this;
+        instance = this;
 
         curTimeInterval = startTimeInterval;
         curStage = 0;
@@ -55,18 +61,14 @@ public class SurvivalManager : MonoBehaviour
         spawnUniqueNPCs.Add(11, NPCSpawnpoint.NPCToSpawn.Brute);
     }
 
-    //Pauses survival timer, this also pauses NPC spawning
-    [HideInInspector]
-    public bool pauseTimer = false;
-
     void Update()
     {
+        //Stop here if the timer is paused
+        if (pauseTimer) return;
+
         //Toggles game console
         if (Input.GetKeyDown(KeyCode.F1))
             GameConsole.ToggleConsole();
-
-        //Stop here if the timer is paused
-        if (pauseTimer) return;
 
         //If player is alive increase timer otherwise stop here
         if (IsPlayerAlive())

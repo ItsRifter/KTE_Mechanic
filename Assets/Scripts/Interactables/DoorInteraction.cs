@@ -14,6 +14,8 @@ public class DoorInteraction : MonoBehaviour
 
     bool isUnlocked;
 
+    Quaternion initRot;
+
     enum InteractMethod
     {
         Handle, //Door can be interacted with a handle
@@ -39,6 +41,8 @@ public class DoorInteraction : MonoBehaviour
     void Start()
     {
         isUnlocked = startUnlocked;
+
+        initRot = transform.rotation;
 
         if (startOpened) Open(true);
         else Close(true);
@@ -98,14 +102,11 @@ public class DoorInteraction : MonoBehaviour
         if(!forced)
             if (doorStatus == DoorStatus.Opened || !CanInteract()) return;
 
-        var parentTranform = transform.parent.gameObject.transform;
+        var parentTranform = GetDoorHinge();
         parentTranform.Rotate(0, -90, 0);
 
         doorStatus = DoorStatus.Opened;
-
-        //targetRotation = Quaternion.Euler(0, 90, 0);
-        //doorStatus = DoorStatus.Opening;
-    }  
+    }
 
     /// <summary>
     /// Closes the door
@@ -115,14 +116,14 @@ public class DoorInteraction : MonoBehaviour
         if(!forced)
             if (doorStatus == DoorStatus.Closed || !CanInteract()) return;
 
-        var parentTranform = transform.parent.gameObject.transform;
-        parentTranform.Rotate(0, 0, 0);
+        var parentTranform = GetDoorHinge();
+        parentTranform.rotation = initRot;
 
         doorStatus = DoorStatus.Closed;
-
-        //targetRotation = Quaternion.Euler(0, -90, 0);
-        //doorStatus = DoorStatus.Closing;
     }
+
+    //Get the door hinge
+    Transform GetDoorHinge() => gameObject.transform.parent.transform;
 
     void FinishClosing()
     {

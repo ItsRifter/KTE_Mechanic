@@ -45,7 +45,7 @@ public class GameConsole : MonoBehaviour
         //Stop NPC Spawns
         var STOP_SPAWNING = new ConsoleCommand("toggle_spawns", "Toggles NPCs from spawning, if disabled the survived timer will stop", () =>
         {
-            SurvivalManager.survivalInstance.pauseTimer = !SurvivalManager.survivalInstance.pauseTimer;
+            SurvivalManager.instance.pauseTimer = !SurvivalManager.instance.pauseTimer;
         });
 
         var SET_HEALTH = new ConsoleCommand<float>("player_sethealth", "Sets player health value between 0 and 100 (0 means death)", (float setHP) =>

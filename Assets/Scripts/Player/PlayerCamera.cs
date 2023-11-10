@@ -11,10 +11,6 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Lock the cursor and hide it
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         xRotation = 0f;
         playerBody = transform.parent.gameObject.transform;
     }
@@ -24,6 +20,9 @@ public class PlayerCamera : MonoBehaviour
     {
         //Console is enabled, stop here
         if (GameConsole.consoleInstance.showConsole) return;
+
+        //If controls are disabled, don't perform camera looking, interactions etc.
+        if (!HealthStatistic.allowControls) return;
 
         DoCameraLooking();
         HandleInteracting();

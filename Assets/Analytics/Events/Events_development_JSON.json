@@ -1,0 +1,14 @@
+[
+  {
+    "eventTimestamp": "10/11/2023 15:54:07",
+    "userID": "NULL",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "beefddb2f3c9526c009bdf78087ac8ed",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Brainless",
+      "timeSurvived": 20.06,
+      "distanceTravelled": 15.0
+    }
+  }
+]

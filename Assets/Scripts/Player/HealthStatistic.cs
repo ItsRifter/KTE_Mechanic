@@ -13,9 +13,16 @@ public class HealthStatistic : MonoBehaviour
     [HideInInspector]
     public float CurHealth { get; private set; }
 
+    //Allows player input
+    public static bool allowControls;
+
+    GameObject lastAttacker;
+
     // Start is called before the first frame update
     void Start()
     {
+        allowControls = false;
+
         //Set health to starting value
         CurHealth = startHealth;
     }
@@ -24,9 +31,10 @@ public class HealthStatistic : MonoBehaviour
     /// Hurt the player.
     /// </summary>
     /// <param name="dmg">The amount of damage to deal</param>
-    public void TakeDamage(float dmg)
+    public void TakeDamage(float dmg, GameObject attacker = null)
     {
         CurHealth -= dmg;
+        lastAttacker = attacker;
 
         Debug.Log($"Took {dmg} | Health {CurHealth}");
 
@@ -39,6 +47,7 @@ public class HealthStatistic : MonoBehaviour
     {
         CurHealth = setHP;
 
+        //Player has less or equal to 0 health after this set, do death functions
         if (CurHealth <= 0)
             OnKilled();
     }
@@ -46,6 +55,18 @@ public class HealthStatistic : MonoBehaviour
     //Performs death functions
     void OnKilled()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //Show statistics to screen
+        MenuScreen.instance.ShowStatistics();
+
+        allowControls = false;
+
+        //Get the killers name
+        string killerName = lastAttacker.GetComponent<NPCTypeStats>().npcName ?? "Nothing";
+        AnalyticTracker.instance.StoreDataInAnalytics(killerName);
+
+        //Makes the camera a bit cinematic with death in local transform
+        var camera = Camera.main;
+        camera.transform.localPosition = new Vector3(0, -0.75f, 0.11f);
+        camera.transform.localRotation = new Quaternion(0, 0, -0.21f, 0.97f);
     }
 }

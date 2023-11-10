@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304e9b825633ff74ab6052f15eeaab7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcName: Sentient Slime
   navAgent: {fileID: 0}
   baseSpeed: 4
   baseFOV: 55
