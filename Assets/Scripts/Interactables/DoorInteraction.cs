@@ -37,6 +37,9 @@ public class DoorInteraction : MonoBehaviour
 
     DoorStatus doorStatus;
 
+    //Stops overusing door after interaction to spamming
+    float timeUntilUsable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,11 +51,18 @@ public class DoorInteraction : MonoBehaviour
         else Close(true);
     }
 
-    Quaternion targetRotation;
+    void Update()
+    {
+        if (timeUntilUsable > 0)
+            timeUntilUsable -= 1.0f * Time.deltaTime;
+    }
 
-    //*PARTS OF CODE BY LIAM ACADEMY
+    //*PARTS OF CODE BY LIAM ACADEMY*
     //Does opening/closing lerping
-    /*IEnumerator DoDoorAnimation()
+
+    /*Quaternion targetRotation;
+
+    IEnumerator DoDoorAnimation()
     {
         Quaternion hinge = gameObject.transform.rotation.normalized;
 
@@ -144,6 +154,8 @@ public class DoorInteraction : MonoBehaviour
         if (doorStatus == DoorStatus.Closed) Open();
         else if (doorStatus == DoorStatus.Opened) Close();
 
+        timeUntilUsable = 1.5f;
+
         //StartCoroutine(DoDoorAnimation());
     }
 
@@ -151,5 +163,75 @@ public class DoorInteraction : MonoBehaviour
     /// Can this door be interacted
     /// </summary>
     /// <returns>The door can be opened or closed</returns>
-    bool CanInteract() => isUnlocked && !(doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing);
+    bool CanInteract() => isUnlocked && timeUntilUsable <= 0.0f;
+        //&& !(doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing);
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other);
+
+        //Check if the collider is a NPC
+        bool isNPC = other.gameObject.GetComponent<NPCTypeStats>() != null;
+        if (isNPC) NPCInteract(other.gameObject);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log(other);
+    }
+
+    /// <summary>
+    /// When the NPC interacts with a door
+    /// </summary>
+    /// <param name="npc">The NPC game object</param>
+    void NPCInteract(GameObject npc)
+    {
+        //Components of the NPC
+        NPCTypeStats.BrainBehaviour behaviour = npc.GetComponent<NPCTypeStats>().behaviourType;
+        NPCNav nav = npc.GetComponent<NPCNav>();
+        EyeFOV sightFOV = npc.GetComponent<EyeFOV>();
+
+        if(interactingMethod == InteractMethod.Handle && doorStatus == DoorStatus.Closed)
+        {
+            switch (behaviour)
+            {
+                case NPCTypeStats.BrainBehaviour.Zombie_Like:
+                {
+                    nav.forceStop = true;
+                    StartCoroutine(BashDoor(sightFOV));
+                }
+                    break;
+
+                //TODO: add behaving methods to below
+                case NPCTypeStats.BrainBehaviour.Phase_Shifting: break;
+                case NPCTypeStats.BrainBehaviour.Aggressive: break;
+            }
+
+            nav.forceStop = false;
+        }
+    }
+
+    /// <summary>
+    /// Coroutine for when the NPC is bashing the door
+    /// </summary>
+    IEnumerator BashDoor(EyeFOV eyeFOV)
+    {
+        int bashes = 0;
+
+        do
+        {
+            //Interrupt task when player is spotted or door just opened
+            if (eyeFOV.canSeePlayer || doorStatus == DoorStatus.Opened)
+                yield return null;
+
+            bashes += 1;
+            yield return new WaitForSeconds(2.25f);
+        }
+        while (bashes < 3);
+        
+        //Force the door open and put a interaction cooldown
+        Open(true);
+        timeUntilUsable = 6.5f;
+        yield return null;
+    }
 }

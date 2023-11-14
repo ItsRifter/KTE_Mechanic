@@ -63,12 +63,12 @@ public class SurvivalManager : MonoBehaviour
 
     void Update()
     {
-        //Stop here if the timer is paused
-        if (pauseTimer) return;
-
         //Toggles game console
         if (Input.GetKeyDown(KeyCode.F1))
             GameConsole.ToggleConsole();
+
+        //Stop here if the timer is paused
+        if (pauseTimer) return;
 
         //If player is alive increase timer otherwise stop here
         if (IsPlayerAlive())

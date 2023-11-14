@@ -13,6 +13,9 @@ public class HealthStatistic : MonoBehaviour
     [HideInInspector]
     public float CurHealth { get; private set; }
 
+    [HideInInspector]
+    public bool onGodMode;
+
     //Allows player input
     public static bool allowControls;
 
@@ -33,6 +36,8 @@ public class HealthStatistic : MonoBehaviour
     /// <param name="dmg">The amount of damage to deal</param>
     public void TakeDamage(float dmg, GameObject attacker = null)
     {
+        if (onGodMode) return;
+
         CurHealth -= dmg;
         lastAttacker = attacker;
 
@@ -48,7 +53,7 @@ public class HealthStatistic : MonoBehaviour
         CurHealth = setHP;
 
         //Player has less or equal to 0 health after this set, do death functions
-        if (CurHealth <= 0)
+        if (CurHealth <= 0 && !onGodMode)
             OnKilled();
     }
 

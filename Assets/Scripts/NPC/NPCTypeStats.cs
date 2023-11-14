@@ -53,21 +53,19 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
 
     GameObject refPlayer;
 
-    /* LIKELY NOT NEEDED
-    enum BehavingStatus
+    /// <summary>
+    /// How the NPC behaves when approaching game objects
+    /// </summary>
+    //This is only used for door interactions
+    public enum BrainBehaviour
     {
-        None, //NPC is inactive
-        Searching, //Looking for the player
-        Hunting, //Lost sight of player (but has found) and is hunting
-        Attacking //Sees the player and is attacking
+        None,           //No unique behaviour
+        Zombie_Like,    //Behaves similar to zombies, low brain functions
+        Phase_Shifting, //Is capable of phasing past objects
+        Aggressive      //A destructive behaviour only causing damage to environment or the living
     }
 
-    BehavingStatus curBehaviour;*/
-
-    void Awake()
-    {
-
-    }
+    public BrainBehaviour behaviourType = BrainBehaviour.None;
 
     void Start()
     {

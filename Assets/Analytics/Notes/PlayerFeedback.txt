@@ -1,0 +1,99 @@
+Tester 1 -
+
+Q: Was the controls easy to understand?
+A: Yes.
+
+Q: When you encountered enemy types, how did it make you feel/respond?
+A: The green one (Bio organism) was seen as a friendly.
+
+Q: How did you adapt to a new enemy type?
+A: - (Too many brainless creatures).
+
+Q: Is a specific enemy type too easy/hard? explain why if so.
+A: NPC Types are balanced.
+
+Q: Did some objects in the game easily convey information to you that they can be used (Lockers to hide etc.)
+A: Increase brightness to objects.
+
+Q: Any additional feedback you wish to give?
+A: The dark area is too dark, increase brightness.
+
+Tester 2 -
+
+Q: Was the controls easy to understand?
+A: Yes
+
+Q: When you encountered enemy types, how did it make you feel/respond?
+A: Felt like I should go the other direction from them.
+
+Q: How did you adapt to a new enemy type?
+A: Ran away.
+
+Q: Is a specific enemy type too easy/hard? explain why if so.
+A: No.
+
+Q: Did some objects in the game easily convey information to you that they can be used (Lockers to hide etc.)
+A: Doors were pretty easy to understand.
+
+Q: Any additional feedback you wish to give?
+A: Maybe a flashlight for the dark areas.
+
+Tester 3 -
+
+Q: Was the controls easy to understand?
+A: 
+
+Q: When you encountered enemy types, how did it make you feel/respond?
+A:
+
+Q: How did you adapt to a new enemy type?
+A:
+
+Q: Is a specific enemy type too easy/hard? explain why if so.
+A:
+
+Q: Did some objects in the game easily convey information to you that they can be used (Lockers to hide etc.)
+A:
+
+Q: Any additional feedback you wish to give?
+A:
+
+Tester 4 -
+
+Q: Was the controls easy to understand?
+A: 
+
+Q: When you encountered enemy types, how did it make you feel/respond?
+A:
+
+Q: How did you adapt to a new enemy type?
+A:
+
+Q: Is a specific enemy type too easy/hard? explain why if so.
+A:
+
+Q: Did some objects in the game easily convey information to you that they can be used (Lockers to hide etc.)
+A:
+
+Q: Any additional feedback you wish to give?
+A:
+
+Tester 5 -
+
+Q: Was the controls easy to understand?
+A: 
+
+Q: When you encountered enemy types, how did it make you feel/respond?
+A:
+
+Q: How did you adapt to a new enemy type?
+A:
+
+Q: Is a specific enemy type too easy/hard? explain why if so.
+A:
+
+Q: Did some objects in the game easily convey information to you that they can be used (Lockers to hide etc.)
+A:
+
+Q: Any additional feedback you wish to give?
+A:

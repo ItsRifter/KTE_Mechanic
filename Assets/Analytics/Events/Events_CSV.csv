@@ -1,3 +1,6 @@
 Timestamp,UserID,Event Name,UUID,Param/killer,Param/timeSurvived,Param/distanceTravelled
-10/11/2023 15:45:17,Tester,SurviveAttempt,3c3a851b86b640bdef8cf33755ba2762,Dummy,24.13,86.643425
-10/11/2023 15:50:40,Bobby,SurviveAttempt,86090b29f4d0bfb09e2baf4a215b15c7,Brainless,39.46,14
+14/11/2023 15:53:38,Clare,SurviveAttempt,8ab471350e2a2d4e6c624e472017883f,Brainless,101.02,14
+14/11/2023 15:55:13,Clare,SurviveAttempt,c7848da791e9075a29e78a4d27cf22fd,Brainless,54.17,14
+14/11/2023 16:35:39,champlain,SurviveAttempt,73aa4fd2dfedcf6e32899edcbc31c1d9,Brainless,75.49,14
+14/11/2023 16:36:32,champlain,SurviveAttempt,7c6a7720449bdc43339525ec12b5b9f4,Brainless,32.58,15
+14/11/2023 16:38:29,champlain,SurviveAttempt,a8ad7dcee4dbb21584f5d2399497b223,Sentient Slime,103.28,15

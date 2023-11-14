@@ -359,6 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
+  forceStop: 0
 --- !u!114 &2509858181883682257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,14 +394,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304e9b825633ff74ab6052f15eeaab7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcName: Dummy
   navAgent: {fileID: 0}
-  refPlayer: {fileID: 0}
   baseSpeed: 3
   baseFOV: 45
   baseRadius: 5
   baseDamage: 1
-  attackRange: 1.5
   attackTime: 1
+  attackRange: 1.5
+  behaviourType: 0
 --- !u!1 &9048012928582964990
 GameObject:
   m_ObjectHideFlags: 0

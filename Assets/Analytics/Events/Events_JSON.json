@@ -1,26 +1,62 @@
 [
   {
-    "eventTimestamp": "10/11/2023 15:45:17",
-    "userID": "Tester",
+    "eventTimestamp": "14/11/2023 15:53:38",
+    "userID": "Clare",
     "eventName": "SurviveAttempt",
-    "eventUUID": "3c3a851b86b640bdef8cf33755ba2762",
-    "GA_Value": 0.0,
-    "eventParams": {
-      "killer": "Dummy",
-      "timeSurvived": 24.13,
-      "distanceTravelled": 86.643425
-    }
-  },
-  {
-    "eventTimestamp": "10/11/2023 15:50:40",
-    "userID": "Bobby",
-    "eventName": "SurviveAttempt",
-    "eventUUID": "86090b29f4d0bfb09e2baf4a215b15c7",
+    "eventUUID": "8ab471350e2a2d4e6c624e472017883f",
     "GA_Value": 0.0,
     "eventParams": {
       "killer": "Brainless",
-      "timeSurvived": 39.46,
+      "timeSurvived": 101.02,
       "distanceTravelled": 14.0
+    }
+  },
+  {
+    "eventTimestamp": "14/11/2023 15:55:13",
+    "userID": "Clare",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "c7848da791e9075a29e78a4d27cf22fd",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Brainless",
+      "timeSurvived": 54.17,
+      "distanceTravelled": 14.0
+    }
+  },
+  {
+    "eventTimestamp": "14/11/2023 16:35:39",
+    "userID": "champlain",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "73aa4fd2dfedcf6e32899edcbc31c1d9",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Brainless",
+      "timeSurvived": 75.49,
+      "distanceTravelled": 14.0
+    }
+  },
+  {
+    "eventTimestamp": "14/11/2023 16:36:32",
+    "userID": "champlain",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "7c6a7720449bdc43339525ec12b5b9f4",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Brainless",
+      "timeSurvived": 32.58,
+      "distanceTravelled": 15.0
+    }
+  },
+  {
+    "eventTimestamp": "14/11/2023 16:38:29",
+    "userID": "champlain",
+    "eventName": "SurviveAttempt",
+    "eventUUID": "a8ad7dcee4dbb21584f5d2399497b223",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "killer": "Sentient Slime",
+      "timeSurvived": 103.28,
+      "distanceTravelled": 15.0
     }
   }
 ]

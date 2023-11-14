@@ -21,10 +21,6 @@ public class GameConsole : MonoBehaviour
 
     public List<object> commandList;
 
-    int maxCommandEntries = 5;
-
-    int entryIndex = -1;
-
     void Start()
     {
         consoleInstance = this;
@@ -36,8 +32,6 @@ public class GameConsole : MonoBehaviour
 
         Cursor.visible = consoleInstance.showConsole;
         Cursor.lockState = consoleInstance.showConsole ? CursorLockMode.Confined : CursorLockMode.Locked;
-
-        consoleInstance.entryIndex = -1;
     }
 
     void Awake()
@@ -50,22 +44,33 @@ public class GameConsole : MonoBehaviour
 
         var SET_HEALTH = new ConsoleCommand<float>("player_sethealth", "Sets player health value between 0 and 100 (0 means death)", (float setHP) =>
         {
+            //Get health component and set health to value
             SurvivalManager.GetPlayerReference().GetComponent<HealthStatistic>().SetHealth(setHP);
         });
 
         var SPAWN_NPC = new ConsoleCommand<string>("npc_spawn", "Spawns an NPC by name input at raycast", (string name) =>
         {
+            
+        });
 
+        var PLAYER_GODMODE = new ConsoleCommand("godmode", "Makes the player immune to all forms of damage", () =>
+        {
+            //Get health component and toggle god mode
+            var health = SurvivalManager.GetPlayerReference().GetComponent<HealthStatistic>();
+            health.onGodMode = !health.onGodMode;
         });
 
         commandList = new List<object>()
         {
             STOP_SPAWNING,
             SET_HEALTH,
-            SPAWN_NPC
+            SPAWN_NPC,
+            PLAYER_GODMODE
         };
     }
 
+    //Prevents inputs from happening if true
+    //this makes a command run once instead of multiple in a frame
     bool haltInputs = false;
 
     void OnGUI()
@@ -77,10 +82,15 @@ public class GameConsole : MonoBehaviour
         GUI.Box(new Rect(0, y, Screen.width, 30.0f), "");
         GUI.backgroundColor = new Color(0, 0, 0, 0);
         input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 20f), input);
-
+        
         if(!haltInputs)
             HandleActions();
+    }
 
+    IEnumerator HandleInputPause()
+    {
+        haltInputs = true;
+        yield return new WaitForSeconds(1.0f);
         haltInputs = false;
     }
 
@@ -90,7 +100,9 @@ public class GameConsole : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
             OnReturn();
 
-        if(pastCommands.Count != 0)
+        //NOT NEEDED FOR THIS MODULE,
+        //It was a nice to have part but is out of the scope
+        /*if(pastCommands.Count != 0)
         {
             //Stops console from updating input field if it shouldn't update
             bool shouldUpdate = false;
@@ -115,29 +127,34 @@ public class GameConsole : MonoBehaviour
                 shouldUpdate = true;
             }
 
-            Debug.Log(shouldUpdate);
-
             //If entry index is not -1 and should update, get the command entry
             if (entryIndex != -1 && shouldUpdate)
             {
                 input = GetCommandEntry(entryIndex);
             }
-        }
+        }*/
     }
 
     public void OnReturn()
     {
         if (showConsole)
         {
-            haltInputs = true;
-            HandleInput();
-            UpdatePastCommands();
+            //UpdatePastCommands();
+
+            bool success = HandleInput();
             input = "";
+
+            if (success)
+                Debug.Log("CHEATS: Command ran successfully");
+            else
+                Debug.Log("CHEATS: Command failed");
+
+            StartCoroutine(HandleInputPause());
         }
     }
 
     //Updates past command array, this either adds to or removes old indexes
-    void UpdatePastCommands()
+    /*void UpdatePastCommands()
     {
         //Past command entries has reached the max allowed, delete the oldest element
         if (pastCommands.Count == maxCommandEntries)
@@ -145,14 +162,18 @@ public class GameConsole : MonoBehaviour
 
         //Add the input to the entries
         pastCommands.Add(input);
-    }
+    }*/
 
     string GetCommandEntry(int entry) => pastCommands[entry];
 
-    void HandleInput()
+    /// <summary>
+    /// Handles the input from the command line
+    /// </summary>
+    /// <returns>If the command ran successfully or failed</returns>
+    bool HandleInput()
     {
         //No input, stop here
-        if (string.IsNullOrEmpty(input)) return;
+        if (string.IsNullOrEmpty(input)) return false;
 
         string[] parameters = input.Split(' ');
 
@@ -160,7 +181,7 @@ public class GameConsole : MonoBehaviour
 
         for (int i = 0; i < commandList.Count; i++)
         {
-            if (commandList[i] is ConsoleCommand cmd)
+            if (commandList[i] is ConsoleCommand cmd && cmd.commandId == input.ToLower())
             {
                 command = cmd;
                 break;
@@ -168,7 +189,7 @@ public class GameConsole : MonoBehaviour
         }
 
         //Failed to find the command, stop here
-        if (command == null) return;
+        if (command == null) return false;
 
         if (command is ConsoleCommand execCmd)
             execCmd.Invoke();
@@ -180,5 +201,7 @@ public class GameConsole : MonoBehaviour
             if(command is ConsoleCommand<string> execString)
                 execString.Invoke( parameters[1] );
         }
+
+        return true;
     }
 }

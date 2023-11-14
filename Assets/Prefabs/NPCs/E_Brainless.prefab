@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
+  forceStop: 0
 --- !u!114 &815409384642790279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0e580c5d25c8645a4e3eac33ea619b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
+  radius: 35
   angleFOV: 0
   refPlayer: {fileID: 0}
   targetMask:
@@ -612,3 +613,4 @@ MonoBehaviour:
   baseDamage: 10
   attackTime: 1.65
   attackRange: 2.5
+  behaviourType: 0

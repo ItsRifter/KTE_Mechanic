@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
+  forceStop: 0
 --- !u!114 &815409384642790279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,3 +613,4 @@ MonoBehaviour:
   baseDamage: 25
   attackTime: 2.5
   attackRange: 3
+  behaviourType: 0

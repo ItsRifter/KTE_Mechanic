@@ -11,7 +11,6 @@ public class AnalyticTracker : MonoBehaviour
     Dictionary<string, object> data;
 
     float distTravel = 0;
-    float survTime = 0;
     Vector3 lastPos;
 
     private void Awake()

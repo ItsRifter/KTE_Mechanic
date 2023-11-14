@@ -30,7 +30,9 @@ public class NPCNav : MonoBehaviour
         return Vector3.down * Time.deltaTime;
     }
 
-    bool forceStop;
+    //Makes the NPC stop moving, useful for performing states
+    [HideInInspector]
+    public bool forceStop;
 
     bool IsNearPlayer()
     {
