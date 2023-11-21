@@ -613,4 +613,4 @@ MonoBehaviour:
   baseDamage: 15
   attackTime: 1
   attackRange: 2.75
-  behaviourType: 0
+  behaviourType: 2

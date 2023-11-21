@@ -171,8 +171,8 @@ public class DoorInteraction : MonoBehaviour
         Debug.Log(other);
 
         //Check if the collider is a NPC
-        bool isNPC = other.gameObject.GetComponent<NPCTypeStats>() != null;
-        if (isNPC) NPCInteract(other.gameObject);
+        if (SurvivalManager.IsObjectNPC(other.gameObject)) 
+            NPCInteract(other.gameObject);
     }
 
     private void OnTriggerStay(Collider other)

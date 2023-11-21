@@ -25,7 +25,7 @@ public class ModelGroups : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var listCheck = groups.Where(f => f.startActive);
+        var listCheck = groups.Where(f => f.startActive).ToList();
 
         //If no groups have startActive set
         if (!listCheck.Any())
@@ -69,9 +69,12 @@ public class ModelGroups : MonoBehaviour
 
         //Set previous model group visabilty to false and set the new group visability to true
 
-        //If a group is currently set after initialising
-        if(curGroup != -1)
+        //If a group is currently set after initialising or not
+        if (curGroup != -1)
             groups[curGroup].objects.ToList().ForEach(o => o.SetActive(false));
+        else
+            foreach (var groupItem in groups)
+                groupItem.objects.ToList().ForEach(o => o.SetActive(false));
 
         groups[group].objects.ToList().ForEach(o => o.SetActive(true));
 

@@ -3,32 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
+public struct UniqueSpawnStruct
+{
+    public int uniqueSpawnValue;
+    public NPCSpawnpoint.NPCToSpawn spawningNPC;
+}
+
 //Preferably a game manager but handles surviving
 public class SurvivalManager : MonoBehaviour
 {
     [HideInInspector]
     public float timeSurvived = -10.0f;
 
-    const float startTimeInterval = 25.0f;
+    [SerializeField]
+    float startTimeInterval = 25.0f;
 
     float curTimeInterval;
 
     int timesSpawnedNPC = 0;
 
-    int[] difficultyTweaks = new int[] { 4, 9, 16, 20 };
-    float[] intervalAdjusts = new float[] { 22.5f, 16.0f, 8.25f };
+    /// <summary>
+    /// The moment the difficulty should be adjusted from total NPC spawns
+    /// </summary>
+    [SerializeField]
+    int[] difficultyTweaks;
+
+    /// <summary>
+    /// The new interval time in line with difficulty tweaks
+    /// </summary>
+    [SerializeField]
+    float[] intervalAdjusts;
 
     //Spawns a specific NPC based on how many have spawned previously
     //E.G: If game spawned 3 NPC's and this will spawn on the 4th, use the NPC type for that time
-    Dictionary<int, NPCSpawnpoint.NPCToSpawn> spawnUniqueNPCs = new Dictionary<int, NPCSpawnpoint.NPCToSpawn>();
+    [SerializeField]
+    UniqueSpawnStruct[] uniqueSpawns;
 
     int curStage;
+
+    int lastUniqueSpawn;
 
     /// <summary>
     /// Gets the player game object
     /// </summary>
     public static GameObject GetPlayerReference() 
         => GameObject.FindGameObjectWithTag("Player");
+
+    /// <summary>
+    /// Determines if the game object is an NPC
+    /// </summary>
+    /// <param name="gameObj">The object to check</param>
+    /// <returns>The object is an NPC</returns>
+    public static bool IsObjectNPC(GameObject gameObj)
+    {
+        return gameObj.GetComponent<NPCTypeStats>() != null;
+    }
 
     //Pauses survival timer, this also pauses NPC spawning
     [HideInInspector]
@@ -38,7 +68,9 @@ public class SurvivalManager : MonoBehaviour
 
     void Start()
     {
-        SetNPCSpawnTimes();
+        lastUniqueSpawn = uniqueSpawns.Max(l => l.uniqueSpawnValue);
+
+        //SetNPCSpawnTimes();
         pauseTimer = true;
 
         instance = this;
@@ -49,9 +81,10 @@ public class SurvivalManager : MonoBehaviour
 
     bool canSpawn = true;
 
+    //COMMENTED OUT FOR BETTER GAMEPLAY FLEXIBILITY
     //Makes an NPC spawn based on how many have spawned previously
     //THIS IS NOT SPAWN TIME INTERVALS
-    void SetNPCSpawnTimes()
+    /*void SetNPCSpawnTimes()
     {
         //BioOrganics
         spawnUniqueNPCs.Add(3, NPCSpawnpoint.NPCToSpawn.BioOrganic);
@@ -59,7 +92,7 @@ public class SurvivalManager : MonoBehaviour
 
         //Brutes
         spawnUniqueNPCs.Add(11, NPCSpawnpoint.NPCToSpawn.Brute);
-    }
+    }*/
 
     void Update()
     {
@@ -101,11 +134,18 @@ public class SurvivalManager : MonoBehaviour
     {
         var point = NPCSpawnpoint.FindRandomSpawnpoint();
 
-        if (spawnUniqueNPCs.Any(k => k.Key == timesSpawnedNPC))
-            point.SpawnNPC(spawnUniqueNPCs[timesSpawnedNPC]);
+        //If a unique spawn should happen based on times an NPC spawned
+        if(uniqueSpawns.Any(v => timesSpawnedNPC == v.uniqueSpawnValue))
+        {
+            var NPC = uniqueSpawns.Where(v => timesSpawnedNPC == v.uniqueSpawnValue)
+                .First().spawningNPC;
+
+            point.SpawnNPC(NPC);
+        }
+        //Otherwise continue as normal
         else
         {
-            if (timesSpawnedNPC < 11)
+            if (timesSpawnedNPC < lastUniqueSpawn)
                 point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Brainless);
             else
                 point.SpawnNPC(NPCSpawnpoint.NPCToSpawn.Random);
