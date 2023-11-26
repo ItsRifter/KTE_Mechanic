@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using static NPCSpawnpoint;
 
 //CODE FROM "Game Dev Guide"
 //https://www.youtube.com/watch?v=VzOEM-4A2OM
@@ -50,7 +51,24 @@ public class GameConsole : MonoBehaviour
 
         var SPAWN_NPC = new ConsoleCommand<string>("npc_spawn", "Spawns an NPC by name input at raycast", (string name) =>
         {
-            
+            name = name.ToLower();
+
+            if (name == "brainless" || name == "sentient slime" || name == "brute")
+            {
+                var camera = Camera.main.transform;
+
+                NPCToSpawn spawnType = NPCToSpawn.Random;
+
+                switch (name)
+                {
+                    case "brainless": spawnType = NPCToSpawn.Brainless; break;
+                    case "sentient slime": spawnType = NPCToSpawn.BioOrganic; break;
+                    case "brute": spawnType = NPCToSpawn.Brute; break;
+                }
+
+                if(Physics.Raycast(camera.position, camera.forward, out RaycastHit info, 32f ))
+                    NPCSpawnpoint.spawnInstance.SpawnNPC(spawnType, info.transform);
+            }
         });
 
         var PLAYER_GODMODE = new ConsoleCommand("godmode", "Makes the player immune to all forms of damage", () =>

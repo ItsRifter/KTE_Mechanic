@@ -10,6 +10,9 @@ public class NPCNav : MonoBehaviour
 
     bool isActive = false;
 
+    [HideInInspector]
+    public GameObject lastTargetObject;
+
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
@@ -34,14 +37,6 @@ public class NPCNav : MonoBehaviour
     [HideInInspector]
     public bool forceStop;
 
-    bool IsNearPlayer()
-    {
-        GameObject player = SurvivalManager.GetPlayerReference();
-        float radius = NPCTypeStatExtensions.GetNPCStatistics(gameObject).GetRadius() / 2.5f;
-
-        return Vector3.Distance(transform.position, player.transform.position) <= radius;
-    }
-
     void Update()
     {
         if (forceStop) return;
@@ -51,32 +46,82 @@ public class NPCNav : MonoBehaviour
             transform.position += ApplyGravity();
         else
         {
-            if (!HasReachedTarget()) return;
+            if (HasReachedTarget())
+            {
+                Debug.Log(lastTargetObject);
 
-            navAgent.isStopped = IsNearPlayer();
+                if (lastTargetObject)
+                    StartCoroutine(DoUniqueObjectBehaving());
 
-            if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
-                MoveToTarget(result);
+                if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
+                {
+                    if(!DoThinkingTarget())
+                        MoveToTarget(result);
+                }
+            }
         }
+
+        navAgent.isStopped = IsNearPlayer();
+    }
+
+    //Is the NPC near the player
+    bool IsNearPlayer()
+    {
+        GameObject player = SurvivalManager.GetPlayerReference();
+        if(player == null) return false;
+
+        float radius = NPCTypeStatExtensions.GetNPCStatistics(gameObject).GetRadius() / 2.5f;
+
+        return Vector3.Distance(transform.position, player.transform.position) <= radius;
+    }
+
+    public virtual bool DoThinkingTarget()
+    {
+        return false;
     }
 
     //Returns if the destination has been reached
-    bool HasReachedTarget()
+    public virtual bool HasReachedTarget()
     {
         Vector3 curPos = transform.position;
+
         return Vector3.Distance(curPos, targetPosition) > 0.5f;
     }
 
+    public virtual IEnumerator DoUniqueObjectBehaving()
+    {
+        lastTargetObject = null;
+        yield return null;
+    }
+
+    /// <summary>
+    /// Move towards a target point
+    /// </summary>
+    public virtual void GoToTargetPoint(GameObject target)
+    {
+        MoveToTarget(target.transform.position);
+        lastTargetObject = target;
+    }
+
+    /// <summary>
+    /// Decides if the NPC wishes to move to a special target point
+    /// E.G: Vents, doors or lockers
+    /// </summary>
+    public virtual bool DecideTargetPoint(Vector3 rayHit, out GameObject targetObj)
+    {
+        targetObj = null;
+        return false;
+    }
+
     //Moves to the target position
-    public void MoveToTarget(Vector3 pos)
+    public virtual void MoveToTarget(Vector3 pos)
     {
         targetPosition = pos;
         navAgent.SetDestination(targetPosition);
     }
 
-    public void MoveToLastSeen(Vector3 lastPos)
+    public virtual void MoveToLastSeen(Vector3 lastPos)
     {
-        //TODO: change state to hunting after reaching last seen position
         targetPosition = lastPos;
         navAgent.SetDestination(targetPosition);
     }

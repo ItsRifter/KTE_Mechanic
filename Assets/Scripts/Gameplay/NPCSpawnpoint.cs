@@ -28,6 +28,13 @@ public class NPCSpawnpoint : MonoBehaviour
         Brute //Spawns a bulky creature
     }
 
+    public static NPCSpawnpoint spawnInstance;
+
+    void Start()
+    {
+        spawnInstance = this;
+    }
+
     /// <summary>
     /// Spawns a NPC at this point
     /// </summary>
@@ -48,6 +55,21 @@ public class NPCSpawnpoint : MonoBehaviour
         {
             Instantiate(npc, hit.position, transform.localRotation);
         }
+    }
+
+    public void SpawnNPC(NPCToSpawn spawnType, Transform location)
+    {
+        Object npc = null;
+
+        switch (spawnType)
+        {
+            case NPCToSpawn.Random: npc = RandomNPC(); break;
+            case NPCToSpawn.Brainless: npc = brainless; break;
+            case NPCToSpawn.BioOrganic: npc = bioOrganic; break;
+            case NPCToSpawn.Brute: npc = brute; break;
+        }
+
+        Instantiate(npc, location.position, Quaternion.identity);    
     }
 
     //Decides a random NPC

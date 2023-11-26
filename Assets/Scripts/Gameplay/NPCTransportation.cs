@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NPCTransportation : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if(SurvivalManager.IsObjectNPC(other.gameObject))
         {
@@ -16,9 +16,9 @@ public class NPCTransportation : MonoBehaviour
             if(behaveType == NPCTypeStats.BrainBehaviour.Phase_Shifting)
                 TransportNPC(other.gameObject);
         }
-    }
+    }*/
 
-    void TransportNPC(GameObject gameObj)
+    public void TransportNPC(GameObject gameObj)
     {
         var points = GetTransportPoints(true);
         int maxPoints = points.Count() - 1;
@@ -38,7 +38,7 @@ public class NPCTransportation : MonoBehaviour
 
     List<GameObject> GetTransportPoints(bool excludeSelf = false)
     {
-        List<GameObject> tpPoints = GameObject.FindGameObjectsWithTag("TelePointNPC").ToList();
+        List<GameObject> tpPoints = GameObject.FindGameObjectsWithTag("TransportNPC").ToList();
 
         if (excludeSelf)
             tpPoints.Remove(gameObject);
