@@ -108,6 +108,7 @@ public class DoorInteraction : MonoBehaviour
     {
         doorStatus = DoorStatus.Closed;
     }
+
     void FinishOpening()
     {
         doorStatus = DoorStatus.Opened;
@@ -142,11 +143,6 @@ public class DoorInteraction : MonoBehaviour
         //Check if the collider is a NPC
         if (SurvivalManager.IsObjectNPC(other.gameObject)) 
             NPCInteract(other.gameObject);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log(other);
     }
 
     /// <summary>

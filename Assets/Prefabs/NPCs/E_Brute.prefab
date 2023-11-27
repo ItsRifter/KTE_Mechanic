@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 462875958226474695}
   - component: {fileID: 8051243697051053295}
   - component: {fileID: 6297387020682603108}
-  - component: {fileID: 7917506976530356258}
+  - component: {fileID: 3428670313963715228}
   - component: {fileID: 815409384642790279}
   - component: {fileID: 3907478973292211265}
   m_Layer: 7
@@ -543,7 +543,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8651793253527143954}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: -334000983
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 8
@@ -555,9 +555,9 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &7917506976530356258
+  m_WalkableMask: 16
+  m_ObstacleAvoidanceType: 3
+--- !u!114 &3428670313963715228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,10 +566,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8651793253527143954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6773b126c1ef551499a87f586be80751, type: 3}
+  m_Script: {fileID: 11500000, guid: 70c8a32673ab5614ebadc65f730668d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
+  lastTargetObject: {fileID: 0}
   forceStop: 0
 --- !u!114 &815409384642790279
 MonoBehaviour:
