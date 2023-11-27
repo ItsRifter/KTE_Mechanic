@@ -57,37 +57,6 @@ public class DoorInteraction : MonoBehaviour
             timeUntilUsable -= 1.0f * Time.deltaTime;
     }
 
-    //*PARTS OF CODE BY LIAM ACADEMY*
-    //Does opening/closing lerping
-
-    /*Quaternion targetRotation;
-
-    IEnumerator DoDoorAnimation()
-    {
-        Quaternion hinge = gameObject.transform.rotation.normalized;
-
-        gameObject.transform.rotation = Quaternion.Slerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
-
-        Debug.Log(gameObject.transform.rotation);
-        Debug.Log(targetRotation);
-
-        //Target rotation is almost equal to value, finish up and return true
-        if (Quaternion.Angle(hinge, targetRotation) < 3.0f)
-        {
-            //hinge = targetRotation;
-            
-            //If the door is opening, set to opened
-            //else if closing, set to closed
-            if (doorStatus == DoorStatus.Opening) doorStatus = DoorStatus.Opened;
-            else if (doorStatus == DoorStatus.Closing) doorStatus = DoorStatus.Closed;
-
-            return true;
-        }
-
-        //Animation hasn't finished yet
-        return false;
-    }*/
-
     /// <summary>
     /// Unlocks the door
     /// </summary>
@@ -166,7 +135,7 @@ public class DoorInteraction : MonoBehaviour
     bool CanInteract() => isUnlocked && timeUntilUsable <= 0.0f;
         //&& !(doorStatus == DoorStatus.Opening || doorStatus == DoorStatus.Closing);
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         Debug.Log(other);
 
@@ -234,4 +203,35 @@ public class DoorInteraction : MonoBehaviour
         timeUntilUsable = 6.5f;
         yield return null;
     }
+
+    //*PARTS OF CODE BY LIAM ACADEMY*
+    //Does opening/closing lerping
+
+    /*Quaternion targetRotation;
+
+    IEnumerator DoDoorAnimation()
+    {
+        Quaternion hinge = gameObject.transform.rotation.normalized;
+
+        gameObject.transform.rotation = Quaternion.Slerp(hinge, targetRotation, Time.deltaTime * animationSpeed);
+
+        Debug.Log(gameObject.transform.rotation);
+        Debug.Log(targetRotation);
+
+        //Target rotation is almost equal to value, finish up and return true
+        if (Quaternion.Angle(hinge, targetRotation) < 3.0f)
+        {
+            //hinge = targetRotation;
+            
+            //If the door is opening, set to opened
+            //else if closing, set to closed
+            if (doorStatus == DoorStatus.Opening) doorStatus = DoorStatus.Opened;
+            else if (doorStatus == DoorStatus.Closing) doorStatus = DoorStatus.Closed;
+
+            return true;
+        }
+
+        //Animation hasn't finished yet
+        return false;
+    }*/
 }

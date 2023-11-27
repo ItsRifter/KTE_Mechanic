@@ -461,6 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 771991206928630239}
+  - component: {fileID: 9191835809998116399}
   m_Layer: 2
   m_Name: Hinge
   m_TagString: Untagged
@@ -488,6 +489,27 @@ Transform:
   - {fileID: 8152772352846090132}
   m_Father: {fileID: 7741818835790014313}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9191835809998116399
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335523088983982436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.14764115, y: 2.598165, z: 2.2248726}
+  m_Center: {x: -0, y: 0, z: -1.005765}
 --- !u!1 &8710879335701146166
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +522,6 @@ GameObject:
   - component: {fileID: 1216103306514579443}
   - component: {fileID: 8130092299965848116}
   - component: {fileID: 2050642695256302632}
-  - component: {fileID: 4690003494248735715}
   - component: {fileID: 1818769747124036507}
   m_Layer: 8
   m_Name: Door
@@ -595,27 +616,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &4690003494248735715
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8710879335701146166}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 1, z: 1}
-  m_Center: {x: -0, y: 0, z: -0}
 --- !u!114 &1818769747124036507
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,10 +20,9 @@ public class SentientSlime : NPCNav
 
     public override bool DoThinkingTarget()
     {
-        Debug.Log("Thought");
-
-        if(Random.Range(0, 3) > 1)
+        if(Random.Range(0, 5) >= 3)
         {
+            Debug.Log("Thought");
             GameObject vent = FindNearestVent();
 
             GoToTargetPoint(vent.transform.GetChild(1).gameObject);

@@ -6,12 +6,13 @@ public class NPCNav : MonoBehaviour
 {
     [HideInInspector]
     public NavMeshAgent navAgent;
-    Vector3 targetPosition;
 
     bool isActive = false;
 
     [HideInInspector]
     public GameObject lastTargetObject;
+
+    Vector3 targetDest;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class NPCNav : MonoBehaviour
     IEnumerator SetupNavigation()
     {
         yield return new WaitForSeconds(0.1f);
+
         isActive = true;
     }
 
@@ -39,8 +41,9 @@ public class NPCNav : MonoBehaviour
 
     void Start()
     {
-        
+        lastTargetObject = null;
     }
+
 
     void Update()
     {
@@ -63,6 +66,7 @@ public class NPCNav : MonoBehaviour
                     StartCoroutine(DoUniqueObjectBehaving());
             }
         }
+
         navAgent.isStopped = IsNearPlayer();
     }
 
@@ -87,7 +91,7 @@ public class NPCNav : MonoBehaviour
     {
         Vector3 curPos = transform.position;
 
-        return Vector3.Distance(curPos, targetPosition) > 0.5f;
+        return Vector3.Distance(curPos, targetDest) > 1.0f;
     }
 
     public virtual bool HasReachedTarget(GameObject target)
@@ -95,7 +99,7 @@ public class NPCNav : MonoBehaviour
         Vector3 curPos = transform.position;
         Vector3 targetPos = target.transform.position;
 
-        return Vector3.Distance(curPos, targetPos) > 0.25f;
+        return Vector3.Distance(curPos, targetPos) < 1.25f;
     }
 
     public virtual IEnumerator DoUniqueObjectBehaving()
@@ -126,14 +130,14 @@ public class NPCNav : MonoBehaviour
     //Moves to the target position
     public virtual void MoveToTarget(Vector3 pos)
     {
-        targetPosition = pos;
-        navAgent.SetDestination(targetPosition);
+        targetDest = pos;
+        navAgent.SetDestination(pos);
     }
 
     public virtual void MoveToLastSeen(Vector3 lastPos)
     {
-        targetPosition = lastPos;
-        navAgent.SetDestination(targetPosition);
+        targetDest = lastPos;
+        navAgent.SetDestination(lastPos);
     }
 
     //Finds a random point within a navmesh
