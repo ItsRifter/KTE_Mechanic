@@ -37,6 +37,11 @@ public class NPCNav : MonoBehaviour
     [HideInInspector]
     public bool forceStop;
 
+    void Start()
+    {
+        
+    }
+
     void Update()
     {
         if (forceStop) return;
@@ -48,19 +53,16 @@ public class NPCNav : MonoBehaviour
         {
             if (HasReachedTarget())
             {
-                Debug.Log(lastTargetObject);
-
-                if (lastTargetObject)
-                    StartCoroutine(DoUniqueObjectBehaving());
-
                 if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
                 {
-                    if(!DoThinkingTarget())
+                    if (!DoThinkingTarget())
                         MoveToTarget(result);
                 }
+
+                if (lastTargetObject != null && HasReachedTarget(lastTargetObject))
+                    StartCoroutine(DoUniqueObjectBehaving());
             }
         }
-
         navAgent.isStopped = IsNearPlayer();
     }
 
@@ -86,6 +88,14 @@ public class NPCNav : MonoBehaviour
         Vector3 curPos = transform.position;
 
         return Vector3.Distance(curPos, targetPosition) > 0.5f;
+    }
+
+    public virtual bool HasReachedTarget(GameObject target)
+    {
+        Vector3 curPos = transform.position;
+        Vector3 targetPos = target.transform.position;
+
+        return Vector3.Distance(curPos, targetPos) > 0.25f;
     }
 
     public virtual IEnumerator DoUniqueObjectBehaving()
