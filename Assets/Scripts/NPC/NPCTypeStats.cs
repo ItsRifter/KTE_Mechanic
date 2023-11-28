@@ -106,10 +106,15 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
         hp.TakeDamage(baseDamage, gameObject);
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision);
+    }
+
     //Sets statistics to this NPC
     void SetStats()
     {
-        GetComponent<NPCNav>().navAgent.speed = GetPatrolSpeed();
+        GetComponent<NPCNav>().navAgent.speed = baseSpeed;
 
         var eyeFOV = GetComponent<EyeFOV>();
         eyeFOV.angleFOV = baseFOV;

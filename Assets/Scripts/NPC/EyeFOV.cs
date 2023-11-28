@@ -48,19 +48,23 @@ public class EyeFOV : MonoBehaviour
             }
         }
 
-        while(canSeePlayer)
+        if (canSeePlayer)
+        {
+            navAgent.MoveToTarget(refPlayer.transform.position);
+
+            if(!refPlayer.GetComponent<PlayerStatus>().inHiding)
+                FOVCheck();
+
+            yield return delay;
+        }
+
+        /*while(canSeePlayer)
         {
             yield return delay;
-            FOVCheck();
 
-            if (canSeePlayer)
-                navAgent.MoveToTarget(refPlayer.transform.position);
-            else
-            {
-                navAgent.MoveToLastSeen(refPlayer.transform.position);
-                break;
-            }
-        }
+            navAgent.MoveToTarget(refPlayer.transform.position);
+            FOVCheck();
+        }*/
     }
 
     void FOVCheck()

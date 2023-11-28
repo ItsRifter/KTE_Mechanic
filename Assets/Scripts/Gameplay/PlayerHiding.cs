@@ -5,30 +5,30 @@ using UnityEngine;
 public class PlayerHiding : MonoBehaviour
 {
     bool isPlayerInRange;
-    bool isHiding;
 
     ModelGroups modelGroupComp;
+    GameObject playerRef;
 
-    // Start is called before the first frame update
     void Start()
     {
         modelGroupComp = GetComponent<ModelGroups>();
-        isHiding = false;
+        playerRef = SurvivalManager.GetPlayerReference();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isPlayerInRange)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            bool isHiding = playerRef.GetComponent<PlayerStatus>().inHiding;
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (isHiding)
                     modelGroupComp.SetModelGroup(0);
                 else
                     modelGroupComp.SetModelGroup(1);
 
-                isHiding = !isHiding;
+                playerRef.GetComponent<PlayerStatus>().inHiding = !isHiding;
             }
         }
     }
@@ -41,16 +41,27 @@ public class PlayerHiding : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (IsPlayerObject(other.gameObject))
+        /*if (IsPlayerObject(other.gameObject))
         {
 
-        }
+        }*/
     }
 
     void OnTriggerExit(Collider other)
     {
         if (IsPlayerObject(other.gameObject) && isPlayerInRange)
             isPlayerInRange = false;
+    }
+
+    public bool IsPlayerHiding()
+    {
+        return playerRef.GetComponent<PlayerStatus>().inHiding;
+    }
+
+    public void ForceOutOfHiding()
+    {
+        playerRef.GetComponent<PlayerStatus>().inHiding = false;
+        modelGroupComp.SetModelGroup(0);
     }
 
     bool IsPlayerObject(GameObject gameObj) =>

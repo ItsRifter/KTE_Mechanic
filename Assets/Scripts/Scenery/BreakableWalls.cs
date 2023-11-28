@@ -11,8 +11,6 @@ public class BreakableWalls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
-
         if (SurvivalManager.IsObjectNPC(other.gameObject))
             Break();
     }

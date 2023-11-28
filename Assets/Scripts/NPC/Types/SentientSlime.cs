@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SentientSlime : NPCNav
 {
+    [HideInInspector]
+    public bool movementSlowed = false;
+
+    float originalSpeed;
+
     public override IEnumerator DoUniqueObjectBehaving()
     {
         var transport = lastTargetObject.GetComponentInParent<NPCTransportation>();
@@ -16,6 +21,18 @@ public class SentientSlime : NPCNav
         lastTargetObject = null;
 
         yield return null;
+    }
+
+    void Start()
+    {
+        originalSpeed = GetComponent<NPCTypeStats>().GetPatrolSpeed();
+    }
+
+    void Update()
+    {
+        float speedImpact = movementSlowed ? 3.0f : 1.0f;
+
+        navAgent.speed = originalSpeed / speedImpact;
     }
 
     public override bool DoThinkingTarget()

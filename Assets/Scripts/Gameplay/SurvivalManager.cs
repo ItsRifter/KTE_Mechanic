@@ -55,10 +55,9 @@ public class SurvivalManager : MonoBehaviour
     /// </summary>
     /// <param name="gameObj">The object to check</param>
     /// <returns>The object is an NPC</returns>
-    public static bool IsObjectNPC(GameObject gameObj)
-    {
-        return gameObj.GetComponent<NPCTypeStats>() != null;
-    }
+    public static bool IsObjectNPC(GameObject gameObj) => gameObj.GetComponent<NPCTypeStats>() != null;
+
+    //public static bool GetNPCBehaviour();
 
     //Pauses survival timer, this also pauses NPC spawning
     [HideInInspector]

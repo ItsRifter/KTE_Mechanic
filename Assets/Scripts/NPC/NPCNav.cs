@@ -7,16 +7,23 @@ public class NPCNav : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent navAgent;
 
-    bool isActive = false;
-
     [HideInInspector]
     public GameObject lastTargetObject;
 
+    [HideInInspector]
+    public bool navPaused;
+
+    [HideInInspector]
+    public EyeFOV eyeFOV;
+
+    bool isActive = false;
     Vector3 targetDest;
 
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        eyeFOV = GetComponent<EyeFOV>();
+
         StartCoroutine(SetupNavigation());
     }
 
@@ -46,6 +53,11 @@ public class NPCNav : MonoBehaviour
 
 
     void Update()
+    {
+        SimulateNPC();
+    }
+
+    public virtual void SimulateNPC()
     {
         if (forceStop) return;
 
