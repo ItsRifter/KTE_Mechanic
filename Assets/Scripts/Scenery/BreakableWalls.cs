@@ -12,6 +12,11 @@ public class BreakableWalls : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (SurvivalManager.IsObjectNPC(other.gameObject))
-            Break();
+        {
+            //See if the NPC is an aggressive type (or in this case a Brute)
+            if(other.gameObject.GetComponent<NPCTypeStats>()
+              .behaviourType == NPCTypeStats.BrainBehaviour.Aggressive)
+                Break();
+        }
     }
 }

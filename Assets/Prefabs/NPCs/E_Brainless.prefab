@@ -638,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Brainless
   navAgent: {fileID: 0}
-  baseSpeed: 3
+  baseSpeed: 2
   baseFOV: 125
   baseRadius: 8
   baseDamage: 10

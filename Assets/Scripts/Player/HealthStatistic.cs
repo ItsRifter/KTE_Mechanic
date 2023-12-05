@@ -41,7 +41,7 @@ public class HealthStatistic : MonoBehaviour
         CurHealth -= dmg;
         lastAttacker = attacker;
 
-        Debug.Log($"Took {dmg} | Health {CurHealth}");
+        //Debug.Log($"Took {dmg} | Health {CurHealth}");
 
         //When the player has no health, do dying functions
         if (CurHealth <= 0)

@@ -100,6 +100,8 @@ public class NPCNav : MonoBehaviour
                     shouldRecalculate = true;
                 }
             }
+      
+            navAgent.isStopped = navPaused || IsNearPlayer();
 
             if (HasReachedTarget() || shouldRecalculate)
             {
@@ -110,25 +112,20 @@ public class NPCNav : MonoBehaviour
                 }
 
                 if (lastTargetObject != null && HasReachedTarget(lastTargetObject))
-                    StartCoroutine(DoUniqueObjectBehaving());
+                    DoUniqueObjectBehaving();
             }
         }
-
-        if (navPaused || IsNearPlayer())
-            navAgent.isStopped = true;
-        else
-            navAgent.isStopped = false;
     }
 
     //Is the NPC near the player
-    bool IsNearPlayer()
+    public bool IsNearPlayer()
     {
         GameObject player = SurvivalManager.GetPlayerReference();
         if(player == null) return false;
 
-        float radius = NPCTypeStatExtensions.GetNPCStatistics(gameObject).GetRadius() / 2.5f;
+        Vector3 curPos = gameObject.transform.position;
 
-        return Vector3.Distance(transform.position, player.transform.position) <= radius;
+        return Vector3.Distance(curPos, player.transform.position) <= 4.5f;
     }
 
     public virtual bool DoThinkingTarget()
@@ -152,10 +149,9 @@ public class NPCNav : MonoBehaviour
         return Vector3.Distance(curPos, targetPos) < 1.25f;
     }
 
-    public virtual IEnumerator DoUniqueObjectBehaving()
+    public virtual void DoUniqueObjectBehaving()
     {
         lastTargetObject = null;
-        yield return null;
     }
 
     /// <summary>

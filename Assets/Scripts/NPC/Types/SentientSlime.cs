@@ -9,7 +9,7 @@ public class SentientSlime : NPCNav
 
     float originalSpeed;
 
-    public override IEnumerator DoUniqueObjectBehaving()
+    public override void DoUniqueObjectBehaving()
     {
         var transport = lastTargetObject.GetComponentInParent<NPCTransportation>();
 
@@ -19,11 +19,9 @@ public class SentientSlime : NPCNav
         }
 
         lastTargetObject = null;
-
-        yield return null;
     }
 
-    void Start()
+    /*void Start()
     {
         originalSpeed = GetComponent<NPCTypeStats>().GetPatrolSpeed();
     }
@@ -33,7 +31,7 @@ public class SentientSlime : NPCNav
         float speedImpact = movementSlowed ? 3.0f : 1.0f;
 
         navAgent.speed = originalSpeed / speedImpact;
-    }
+    }*/
 
     public override bool DoThinkingTarget()
     {

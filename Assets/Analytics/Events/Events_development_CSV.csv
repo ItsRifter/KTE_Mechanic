@@ -1,0 +1,6 @@
+Timestamp,UserID,Event Name,UUID,Param/killer,Param/timeSurvived,Param/distanceTravelled
+5/12/2023 14:28:29,NULL,SurviveAttempt,255afdb2dc5eb2913f68200aa5f837b8,Sentient Slime,3.35,15
+5/12/2023 14:29:18,NULL,SurviveAttempt,c728320de139e2982b4030795af372d9,Sentient Slime,1.51,15
+5/12/2023 14:31:55,NULL,SurviveAttempt,6d71490c8e4a190639654c0a59fef2cc,Sentient Slime,2.16,15
+5/12/2023 14:32:33,NULL,SurviveAttempt,1fc24a12610b0a9c6e5e43b65073b6c8,Sentient Slime,-0.44,16
+5/12/2023 14:42:37,NULL,SurviveAttempt,62d5c71d9ae68f3fa216b7afbed99939,Sentient Slime,0.18,14

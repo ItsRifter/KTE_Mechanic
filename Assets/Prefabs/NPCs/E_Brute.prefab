@@ -583,7 +583,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 16
+  m_WalkableMask: 17
   m_ObstacleAvoidanceType: 3
 --- !u!114 &3428670313963715228
 MonoBehaviour:
@@ -638,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Brute
   navAgent: {fileID: 0}
-  baseSpeed: 2
+  baseSpeed: 1.75
   baseFOV: 135
   baseRadius: 7
   baseDamage: 25

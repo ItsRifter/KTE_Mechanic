@@ -5,7 +5,7 @@ public class PlayerCamera : MonoBehaviour
     [HideInInspector]
     public float mouseSens = 2;
 
-    const float defaultMouseSens = 600.0f;
+    const float defaultMouseSens = 200.0f;
 
     Transform playerBody;
 
