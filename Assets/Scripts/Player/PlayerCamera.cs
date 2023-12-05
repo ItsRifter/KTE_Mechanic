@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    float mouseSens = 925f;
+    [HideInInspector]
+    public float mouseSens = 2;
+
+    const float defaultMouseSens = 600.0f;
 
     Transform playerBody;
 
     float xRotation;
 
+    public static PlayerCamera playerCamera;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerCamera = this;
+
         xRotation = 0f;
         playerBody = transform.parent.gameObject.transform;
     }
@@ -32,8 +39,8 @@ public class PlayerCamera : MonoBehaviour
     void DoCameraLooking()
     {
         //get mouse inputs, times by deltatime and mouse sensitivity
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * mouseSens;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * mouseSens;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * (defaultMouseSens * mouseSens);
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * (defaultMouseSens * mouseSens);
 
         //Applies rotation to player and camera
         xRotation -= mouseY;

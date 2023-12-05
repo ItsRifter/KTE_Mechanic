@@ -17,7 +17,20 @@ public class NPCNav : MonoBehaviour
     public EyeFOV eyeFOV;
 
     bool isActive = false;
+
     Vector3 targetDest;
+
+    //Makes the NPC stop moving, useful for performing states
+    [HideInInspector]
+    public bool forceStop;
+
+    //Should the navigation recalculate the path
+    //Useful if the NPC is stuck
+    bool shouldRecalculate;
+
+    float timeToRetry;
+
+    Vector3 lastPos;
 
     void Awake()
     {
@@ -31,6 +44,7 @@ public class NPCNav : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
+        lastPos = transform.position;
         isActive = true;
     }
 
@@ -42,19 +56,22 @@ public class NPCNav : MonoBehaviour
         return Vector3.down * Time.deltaTime;
     }
 
-    //Makes the NPC stop moving, useful for performing states
-    [HideInInspector]
-    public bool forceStop;
-
     void Start()
     {
         lastTargetObject = null;
-    }
 
+        timeToRetry = 3.0f;
+        shouldRecalculate = false;
+    }
 
     void Update()
     {
-        SimulateNPC();
+        bool isChasing = eyeFOV.canSeePlayer;
+
+        if(!isChasing)
+            SimulateNPC();
+        else
+            GoToTargetPoint(SurvivalManager.GetPlayerReference().gameObject);
     }
 
     public virtual void SimulateNPC()
@@ -66,7 +83,25 @@ public class NPCNav : MonoBehaviour
             transform.position += ApplyGravity();
         else
         {
-            if (HasReachedTarget())
+            //Check if the NPC isn't stuck
+            if (Vector3.Distance(transform.position, lastPos) > 1.0f)
+            {
+                lastPos = transform.position;
+                timeToRetry = 3.0f;
+            }
+            else
+            {
+                timeToRetry -= 1.0f * Time.deltaTime;
+
+                //If stuck, try to recalculate nav destination
+                if(timeToRetry < 0.0f)
+                {
+                    timeToRetry = 3.0f;
+                    shouldRecalculate = true;
+                }
+            }
+
+            if (HasReachedTarget() || shouldRecalculate)
             {
                 if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
                 {
@@ -79,7 +114,10 @@ public class NPCNav : MonoBehaviour
             }
         }
 
-        navAgent.isStopped = IsNearPlayer();
+        if (navPaused || IsNearPlayer())
+            navAgent.isStopped = true;
+        else
+            navAgent.isStopped = false;
     }
 
     //Is the NPC near the player

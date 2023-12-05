@@ -436,7 +436,6 @@ GameObject:
   - component: {fileID: 8051243697051053295}
   - component: {fileID: -3798257656497017087}
   - component: {fileID: 6297387020682603108}
-  - component: {fileID: -1593751452078103393}
   - component: {fileID: 6057614733530508039}
   - component: {fileID: 815409384642790279}
   - component: {fileID: 3907478973292211265}
@@ -586,21 +585,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 3
---- !u!114 &-1593751452078103393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651793253527143954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6773b126c1ef551499a87f586be80751, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navAgent: {fileID: 0}
-  lastTargetObject: {fileID: 0}
-  forceStop: 0
 --- !u!114 &6057614733530508039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +599,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
   lastTargetObject: {fileID: 0}
+  navPaused: 0
+  eyeFOV: {fileID: 0}
   forceStop: 0
+  movementSlowed: 0
 --- !u!114 &815409384642790279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,8 +615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0e580c5d25c8645a4e3eac33ea619b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 8
-  angleFOV: 120
+  radius: 11
+  angleFOV: 170
   refPlayer: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -653,8 +640,8 @@ MonoBehaviour:
   npcName: Sentient Slime
   navAgent: {fileID: 0}
   baseSpeed: 4
-  baseFOV: 55
-  baseRadius: 8
+  baseFOV: 130
+  baseRadius: 10
   baseDamage: 15
   attackTime: 1
   attackRange: 2.75

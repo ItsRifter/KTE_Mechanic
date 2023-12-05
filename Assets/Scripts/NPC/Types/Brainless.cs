@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class Brainless : NPCNav
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /// <summary>
     /// Coroutine for when the NPC is bashing the door
@@ -23,7 +12,7 @@ public class Brainless : NPCNav
     {
         navPaused = true;
         int bashes = 0;
-        Debug.Log("Doing stuff " + navPaused);
+
         do
         {
             //Interrupt task when player is spotted or door just opened

@@ -437,7 +437,6 @@ GameObject:
   - component: {fileID: 6113571522783512923}
   - component: {fileID: 6297387020682603108}
   - component: {fileID: 815409384642790279}
-  - component: {fileID: -3341913151471744883}
   - component: {fileID: 6189777370159364800}
   - component: {fileID: 3907478973292211265}
   m_Layer: 7
@@ -608,21 +607,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   canSeePlayer: 0
---- !u!114 &-3341913151471744883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651793253527143954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6773b126c1ef551499a87f586be80751, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navAgent: {fileID: 0}
-  lastTargetObject: {fileID: 0}
-  forceStop: 0
 --- !u!114 &6189777370159364800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,6 +619,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4dd01553322834ab22644c5c12b265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navAgent: {fileID: 0}
+  lastTargetObject: {fileID: 0}
+  navPaused: 0
+  eyeFOV: {fileID: 0}
+  forceStop: 0
 --- !u!114 &3907478973292211265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,8 +639,8 @@ MonoBehaviour:
   npcName: Brainless
   navAgent: {fileID: 0}
   baseSpeed: 3
-  baseFOV: 45
-  baseRadius: 6
+  baseFOV: 125
+  baseRadius: 8
   baseDamage: 10
   attackTime: 1.65
   attackRange: 2.5

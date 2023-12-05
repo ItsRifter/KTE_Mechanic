@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class EyeFOV : MonoBehaviour
 {
+    [HideInInspector]
     public float radius;
+
+    [HideInInspector]
     public float angleFOV;
 
     //The player to target

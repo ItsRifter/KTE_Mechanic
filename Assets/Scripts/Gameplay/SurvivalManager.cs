@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public struct UniqueSpawnStruct
@@ -156,4 +156,17 @@ public class SurvivalManager : MonoBehaviour
     //Returns if the player is alive
     bool IsPlayerAlive()
         => GetPlayerReference().GetComponent<HealthStatistic>().CurHealth > 0.0f;
+
+    /// <summary>
+    /// Updates mouse sensitivity for player looking
+    /// </summary>
+    public void UpdateMouseSens(Slider slider)
+    {
+        //Set mouse sensitivity value
+        PlayerCamera.playerCamera.mouseSens = MathF.Round(slider.value, 2);
+        
+        //Update text to display new value
+        GameObject.Find("SensText").GetComponent<Text>().text
+            = $"Sensitivity {PlayerCamera.playerCamera.mouseSens}";
+    }
 }

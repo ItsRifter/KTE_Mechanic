@@ -141,6 +141,8 @@ public class DoorInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (doorStatus == DoorStatus.Opened) return;
+
         //Check if the collider is a NPC
         if (SurvivalManager.IsObjectNPC(other.gameObject))
         {
