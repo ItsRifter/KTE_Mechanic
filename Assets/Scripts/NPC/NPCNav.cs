@@ -100,7 +100,9 @@ public class NPCNav : MonoBehaviour
                     shouldRecalculate = true;
                 }
             }
-      
+
+            //Debug.Log(navAgent.isStopped);
+
             navAgent.isStopped = navPaused || IsNearPlayer();
 
             if (HasReachedTarget() || shouldRecalculate)

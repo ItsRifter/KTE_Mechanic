@@ -456,8 +456,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.95000005, z: -4.88}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1.25, y: 1.35, z: 1.25}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7336941245176411183}
   - {fileID: 3828669589141938192}
@@ -622,7 +622,7 @@ MonoBehaviour:
     m_Bits: 8
   obstructMasks:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   canSeePlayer: 0
 --- !u!114 &3907478973292211265
 MonoBehaviour:
@@ -642,6 +642,6 @@ MonoBehaviour:
   baseFOV: 135
   baseRadius: 7
   baseDamage: 25
-  attackTime: 2.5
+  attackTime: 2.1
   attackRange: 3
   behaviourType: 3

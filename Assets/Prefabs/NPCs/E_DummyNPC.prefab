@@ -388,6 +388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 0}
   lastTargetObject: {fileID: 0}
+  navPaused: 0
+  eyeFOV: {fileID: 0}
   forceStop: 0
 --- !u!114 &2509858181883682257
 MonoBehaviour:
@@ -409,7 +411,7 @@ MonoBehaviour:
     m_Bits: 8
   obstructMasks:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   canSeePlayer: 0
 --- !u!114 &528136602534981426
 MonoBehaviour:

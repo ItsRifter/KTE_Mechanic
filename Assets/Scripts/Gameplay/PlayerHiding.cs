@@ -6,6 +6,9 @@ public class PlayerHiding : MonoBehaviour
 {
     bool isPlayerInRange;
 
+    [HideInInspector]
+    bool isBroken = false;
+
     ModelGroups modelGroupComp;
     GameObject playerRef;
 
@@ -17,6 +20,9 @@ public class PlayerHiding : MonoBehaviour
 
     void Update()
     {
+        //Locker is broken and cannot be used
+        if (isBroken) return;
+
         if (isPlayerInRange)
         {
             bool isHiding = playerRef.GetComponent<PlayerStatus>().inHiding;
@@ -33,18 +39,21 @@ public class PlayerHiding : MonoBehaviour
         }
     }
 
+    //Breaks the locker rendering it ineffective
+    public void Break()
+    {
+        modelGroupComp.SetModelGroup(2);
+
+        playerRef.GetComponent<PlayerStatus>().inHiding = false;
+        isPlayerInRange = false;
+
+        isBroken = true;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (IsPlayerObject(other.gameObject) && !isPlayerInRange)
             isPlayerInRange = true;
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        /*if (IsPlayerObject(other.gameObject))
-        {
-
-        }*/
     }
 
     void OnTriggerExit(Collider other)

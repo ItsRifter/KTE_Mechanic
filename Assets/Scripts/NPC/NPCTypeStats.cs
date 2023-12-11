@@ -42,7 +42,7 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
 
     //How much damage to deal
     public float baseDamage = 1.0f;
-    
+
     //The time for a new attack to occur
     public float attackTime = 1.0f;
 
@@ -73,6 +73,8 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
         SetStats();
     }
 
+    bool isAttacking = false;
+
     void Update()
     {
         if (lastAttackTime < attackTime)
@@ -83,6 +85,8 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
 
         if (CanAttackPlayer())
             AttackPlayer();
+        else
+            lastAttackTime = 0.0f;
     }
 
     bool CanAttackPlayer()
@@ -102,13 +106,8 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
         if (lastAttackTime < attackTime) return;
         if (hp == null || hp.CurHealth <= 0.0f ) return;
 
-        lastAttackTime = 0f;
+        lastAttackTime = 0.0f;
         hp.TakeDamage(baseDamage, gameObject);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision);
     }
 
     //Sets statistics to this NPC

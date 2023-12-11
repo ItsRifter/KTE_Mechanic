@@ -13,6 +13,9 @@ public struct UniqueSpawnStruct
 //Preferably a game manager but handles surviving
 public class SurvivalManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject pausePanel;
+
     [HideInInspector]
     public float timeSurvived = -10.0f;
 
@@ -22,6 +25,8 @@ public class SurvivalManager : MonoBehaviour
     float curTimeInterval;
 
     int timesSpawnedNPC = 0;
+
+    float intervalTimer;
 
     /// <summary>
     /// The moment the difficulty should be adjusted from total NPC spawns
@@ -95,20 +100,24 @@ public class SurvivalManager : MonoBehaviour
 
     void Update()
     {
+        //Stop here if the timer is paused
+        if (pauseTimer) return;
+
+        HandlePausing();
+
         //Toggles game console
         if (Input.GetKeyDown(KeyCode.F1))
             GameConsole.ToggleConsole();
-
-        //Stop here if the timer is paused
-        if (pauseTimer) return;
 
         //If player is alive increase timer otherwise stop here
         if (IsPlayerAlive())
             timeSurvived += 1.0f * Time.deltaTime;
         else return;
 
+        intervalTimer = MathF.Round(timeSurvived, 2) % curTimeInterval;
+
         //If a time intevral has been met..
-        if (Math.Round(timeSurvived, 2) % curTimeInterval == 0 && canSpawn)
+        if (intervalTimer == 0 && canSpawn)
         {
             //Spawn a new NPC
             SpawnNPC();
@@ -122,6 +131,8 @@ public class SurvivalManager : MonoBehaviour
 
                 curTimeInterval = intervalAdjusts[curStage];
                 curStage++;
+
+                Debug.Log($"New time interval {curTimeInterval}");
             }
         }
         else if (Math.Round(timeSurvived, 2) % curTimeInterval == 1)
@@ -157,6 +168,41 @@ public class SurvivalManager : MonoBehaviour
     bool IsPlayerAlive()
         => GetPlayerReference().GetComponent<HealthStatistic>().CurHealth > 0.0f;
 
+
+    bool isPaused = false;
+    bool lastPause;
+
+    /// <summary>
+    /// Handles pause menu
+    /// </summary>
+    void HandlePausing()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            isPaused = !isPaused;
+
+        //If "isPause" changed from last state
+        if (lastPause != isPaused)
+        {
+            //Show or hide pause menu
+            pausePanel.SetActive(isPaused);
+
+            lastPause = isPaused;
+        }
+
+        if (isPaused)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        } 
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        
+        HealthStatistic.allowControls = !isPaused;
+    }
+
     /// <summary>
     /// Updates mouse sensitivity for player looking
     /// </summary>
@@ -168,5 +214,14 @@ public class SurvivalManager : MonoBehaviour
         //Update text to display new value
         GameObject.Find("SensText").GetComponent<Text>().text
             = $"Sensitivity {PlayerCamera.playerCamera.mouseSens}";
+    }
+
+    /// <summary>
+    /// Handles game quitting
+    /// </summary>
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game Quitted");
     }
 }

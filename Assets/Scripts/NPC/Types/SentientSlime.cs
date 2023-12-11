@@ -7,8 +7,6 @@ public class SentientSlime : NPCNav
     [HideInInspector]
     public bool movementSlowed = false;
 
-    float originalSpeed;
-
     public override void DoUniqueObjectBehaving()
     {
         var transport = lastTargetObject.GetComponentInParent<NPCTransportation>();
@@ -21,23 +19,19 @@ public class SentientSlime : NPCNav
         lastTargetObject = null;
     }
 
-    /*void Start()
+    public IEnumerator TemporaryMovementSlowdown()
     {
-        originalSpeed = GetComponent<NPCTypeStats>().GetPatrolSpeed();
+        movementSlowed = true;
+
+        yield return new WaitForSeconds(3.25f);
+
+        movementSlowed = false;
     }
-
-    void Update()
-    {
-        float speedImpact = movementSlowed ? 3.0f : 1.0f;
-
-        navAgent.speed = originalSpeed / speedImpact;
-    }*/
 
     public override bool DoThinkingTarget()
     {
-        if(Random.Range(0, 5) >= 3)
+        if(Random.Range(0, 7) >= 4)
         {
-            Debug.Log("Thought");
             GameObject vent = FindNearestVent();
 
             GoToTargetPoint(vent.transform.GetChild(1).gameObject);
@@ -46,6 +40,14 @@ public class SentientSlime : NPCNav
         }
 
         return false;
+    }
+
+    public override void SimulateNPC()
+    {
+        float orgSpeed = GetComponent<NPCTypeStats>().baseSpeed;
+        navAgent.speed = orgSpeed / (movementSlowed ? 5.0f : 1.0f);
+
+        base.SimulateNPC();
     }
 
     GameObject FindNearestVent()

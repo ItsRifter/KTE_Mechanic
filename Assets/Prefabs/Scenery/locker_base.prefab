@@ -94,6 +94,37 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1805344151048849784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7783292128205538050}
+  m_Layer: 6
+  m_Name: PerspectivePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 558b146cbce631c44b11d351f61347ed, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7783292128205538050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805344151048849784}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.005, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6937079400112953611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &6630741471852095138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,6 +288,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed10271e3cc946e43a62fcefb65af1b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6597660486618874185}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed10271e3cc946e43a62fcefb65af1b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7783292128205538050}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ed10271e3cc946e43a62fcefb65af1b7, type: 3}
       insertIndex: -1
@@ -294,13 +328,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groups:
-  - groupName: Locker Open
+  - groupName: Open
     objects:
     - {fileID: 5819857901518117875}
     startActive: 1
-  - groupName: Locker Closed
+  - groupName: Closed
     objects:
     - {fileID: 7323890695267302351}
+    startActive: 0
+  - groupName: Broken
+    objects: []
     startActive: 0
 --- !u!64 &2956037741757114534
 MeshCollider:

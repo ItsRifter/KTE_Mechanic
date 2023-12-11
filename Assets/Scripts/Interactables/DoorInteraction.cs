@@ -155,13 +155,18 @@ public class DoorInteraction : MonoBehaviour
                     break;
 
                 case NPCTypeStats.BrainBehaviour.Phase_Shifting:
+                    StartCoroutine(other.gameObject.GetComponent<SentientSlime>().TemporaryMovementSlowdown());
                     break;
 
                 case NPCTypeStats.BrainBehaviour.Aggressive:
+                    Destroy(GetParent());
                     break;
             }
         }
     }
+
+    //Gets the door as a whole in the scene
+    GameObject GetParent() => transform.parent.transform.parent.gameObject;
 
     /// <summary>
     /// When the NPC interacts with a door
