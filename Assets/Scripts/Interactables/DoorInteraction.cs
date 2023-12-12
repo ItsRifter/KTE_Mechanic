@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip doorBashSound;
+
     //Makes the door unlocked on start
     [SerializeField]
     bool startUnlocked = true;
@@ -155,7 +158,7 @@ public class DoorInteraction : MonoBehaviour
                     break;
 
                 case NPCTypeStats.BrainBehaviour.Phase_Shifting:
-                    StartCoroutine(other.gameObject.GetComponent<SentientSlime>().TemporaryMovementSlowdown());
+                    StartCoroutine(other.gameObject.GetComponent<SentientSlime>().TemporaryMovementSlowdown(3.25f));
                     break;
 
                 case NPCTypeStats.BrainBehaviour.Aggressive:
@@ -163,6 +166,14 @@ public class DoorInteraction : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void PlayBashSound()
+    {
+        var audio = GetComponent<AudioSource>();
+
+        audio.clip = doorBashSound;
+        audio.Play();
     }
 
     //Gets the door as a whole in the scene

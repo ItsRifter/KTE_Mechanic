@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Brainless : NPCNav
 {
-
     /// <summary>
     /// Coroutine for when the NPC is bashing the door
     /// </summary>
@@ -18,6 +17,8 @@ public class Brainless : NPCNav
             //Interrupt task when player is spotted or door just opened
             if (eyeFOV.canSeePlayer || door.doorStatus == DoorInteraction.DoorStatus.Opened)
                 yield return null;
+
+            door.PlayBashSound();
 
             bashes += 1;
             yield return new WaitForSeconds(2.25f);

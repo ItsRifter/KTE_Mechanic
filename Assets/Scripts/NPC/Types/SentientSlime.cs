@@ -19,11 +19,11 @@ public class SentientSlime : NPCNav
         lastTargetObject = null;
     }
 
-    public IEnumerator TemporaryMovementSlowdown()
+    public IEnumerator TemporaryMovementSlowdown(float waitTime = 1.0f)
     {
         movementSlowed = true;
 
-        yield return new WaitForSeconds(3.25f);
+        yield return new WaitForSeconds(waitTime);
 
         movementSlowed = false;
     }

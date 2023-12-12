@@ -66,7 +66,9 @@ public class PlayerCamera : MonoBehaviour
     //Finds a door that is within camera view
     DoorInteraction FindDoor()
     {
-        Ray ray = new(transform.position, transform.forward);
+        var camera = Camera.main;
+
+        Ray ray = new(camera.transform.position, camera.transform.forward);
         RaycastHit hit;
 
         if(Physics.Raycast(ray, out hit, 2, LayerMask.GetMask("Interactable") ))

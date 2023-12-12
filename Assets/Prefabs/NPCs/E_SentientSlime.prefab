@@ -603,9 +603,9 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 8
-  obstructMasks:
+  ignoreMasks:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 0
   canSeePlayer: 0
 --- !u!114 &6057614733530508039
 MonoBehaviour:
@@ -643,6 +643,6 @@ MonoBehaviour:
   baseFOV: 130
   baseRadius: 10
   baseDamage: 15
-  attackTime: 2.4
+  attackTime: 1.4
   attackRange: 2.75
   behaviourType: 2

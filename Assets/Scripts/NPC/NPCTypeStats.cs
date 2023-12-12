@@ -73,18 +73,19 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
         SetStats();
     }
 
-    bool isAttacking = false;
-
     void Update()
     {
-        if (lastAttackTime < attackTime)
-        {
-            lastAttackTime += 1.0f * Time.deltaTime;
-            lastAttackTime = Mathf.Clamp(lastAttackTime, 0.0f, attackTime);
-        }
-
         if (CanAttackPlayer())
-            AttackPlayer();
+        {
+            if (lastAttackTime < attackTime)
+            {
+                lastAttackTime += 1.0f * Time.deltaTime;
+                lastAttackTime = Mathf.Clamp(lastAttackTime, 0.0f, attackTime);
+            }
+
+            if (lastAttackTime >= attackTime)
+                AttackPlayer();
+        }
         else
             lastAttackTime = 0.0f;
     }
@@ -93,7 +94,7 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
     {
         float distToPlayer = Vector3.Distance(transform.position, refPlayer.transform.position);
 
-        if (distToPlayer <= attackRange && lastAttackTime >= attackTime)
+        if (distToPlayer <= attackRange)
             return true;
 
         return false;
@@ -103,7 +104,6 @@ public class NPCTypeStats : MonoBehaviour, ISingleton
     {
         HealthStatistic hp = refPlayer.GetComponent<HealthStatistic>();
 
-        if (lastAttackTime < attackTime) return;
         if (hp == null || hp.CurHealth <= 0.0f ) return;
 
         lastAttackTime = 0.0f;

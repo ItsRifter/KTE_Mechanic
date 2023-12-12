@@ -68,7 +68,9 @@ public class NPCNav : MonoBehaviour
     {
         bool isChasing = eyeFOV.canSeePlayer;
 
-        if(!isChasing)
+        navAgent.isStopped = navPaused || IsNearPlayer();
+
+        if (!isChasing)
             SimulateNPC();
         else
             GoToTargetPoint(SurvivalManager.GetPlayerReference().gameObject);
@@ -101,10 +103,6 @@ public class NPCNav : MonoBehaviour
                 }
             }
 
-            //Debug.Log(navAgent.isStopped);
-
-            navAgent.isStopped = navPaused || IsNearPlayer();
-
             if (HasReachedTarget() || shouldRecalculate)
             {
                 if (GetRandomPoint(transform.position, 64.0f, out Vector3 result))
@@ -127,7 +125,7 @@ public class NPCNav : MonoBehaviour
 
         Vector3 curPos = gameObject.transform.position;
 
-        return Vector3.Distance(curPos, player.transform.position) <= 4.5f;
+        return Vector3.Distance(curPos, player.transform.position) <= 1.3f;
     }
 
     public virtual bool DoThinkingTarget()

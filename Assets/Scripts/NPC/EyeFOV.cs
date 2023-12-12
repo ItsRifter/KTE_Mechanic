@@ -17,7 +17,7 @@ public class EyeFOV : MonoBehaviour
     LayerMask targetMask;
 
     [SerializeField]
-    LayerMask obstructMasks;
+    LayerMask ignoreMasks;
 
     [HideInInspector]
     public bool canSeePlayer;
@@ -84,7 +84,7 @@ public class EyeFOV : MonoBehaviour
                 float distToTarget = Vector3.Distance(transform.position, target.position);
 
                 //Check if we can or can't see the player, set bool accordingly to result
-                if (!Physics.Raycast(transform.position, targetDir, distToTarget, obstructMasks))
+                if (!Physics.Raycast(transform.position, targetDir, distToTarget, ignoreMasks))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;

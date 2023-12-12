@@ -11,10 +11,15 @@ public class Movement : MonoBehaviour
     [SerializeField]
     float runSpeed = 4.5f;
 
+    [SerializeField]
+    float crouchSpeed = 2.0f;
+
     const float stamina = 10.0f;
 
     [HideInInspector]
     public float curStamina;
+
+    bool isCrouching;
 
     //The character controller for any movements
     CharacterController controller;
@@ -25,6 +30,8 @@ public class Movement : MonoBehaviour
         //Get the character controller component
         controller = GetComponent<CharacterController>();
         curStamina = stamina;
+
+        isCrouching = false;
     }
 
     // Update is called once per frame
@@ -45,6 +52,9 @@ public class Movement : MonoBehaviour
         if (!IsGrounded())
             ApplyGravity();
 
+        isCrouching = Input.GetKey(KeyCode.LeftControl);
+        DoCameraCrouch();
+
         RegenStamina();
 
         AnalyticTracker.instance.UpdateDistanceTravelled(transform.position);
@@ -61,8 +71,37 @@ public class Movement : MonoBehaviour
         controller.Move(movement * GetSpeed() * Time.deltaTime);
     }
 
+    void DoCameraCrouch()
+    {
+        float camHeight = isCrouching ? 0.35f : 1.0f;
+
+        gameObject.transform.parent.transform.localScale = new Vector3(1.0f, camHeight, 1.0f);
+
+        //gameObject.transform.localScale = ;
+
+        /*if (isCrouching)
+        {
+            controller.height = 1.45f;
+            camHeight *= 0.10f;
+        }
+        else
+        {
+            controller.height = 2.0f;
+            camHeight *= 0.5f;
+        }
+
+        var camera = Camera.main;
+        camera.transform.position = controller.transform.position + camHeight;
+
+        controller.transform.localPosition = controller.transform.position;*/
+    }
+
+    //Gets appropriate movement speed
     float GetSpeed()
     {
+        if (isCrouching)
+            return crouchSpeed;
+
         if (Input.GetKey(KeyCode.LeftShift) && curStamina > 0.0f)
         {
             curStamina -= 2f * Time.deltaTime;
@@ -86,8 +125,8 @@ public class Movement : MonoBehaviour
     bool IsGrounded()
     {
         Vector3 point = GameObject.Find("PlayerGround").transform.position;
-        return Physics.Raycast(point, Vector3.down, 0.1f, LayerMask.GetMask("Walkable"));
+        return Physics.Raycast(point, Vector3.down, 0.2f, LayerMask.GetMask("Walkable"));
     }
 
-    void ApplyGravity() => transform.position += Vector3.down * (Time.deltaTime * 9.81f);
+    void ApplyGravity() => transform.position += Vector3.down * Time.deltaTime * 9.81f;
 }
