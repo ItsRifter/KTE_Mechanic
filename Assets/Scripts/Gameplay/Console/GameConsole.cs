@@ -27,11 +27,16 @@ public class GameConsole : MonoBehaviour
         consoleInstance = this;
     }
 
+    /// <summary>
+    /// Toggles console visibility
+    /// </summary>
     public static void ToggleConsole()
     {
         consoleInstance.showConsole = !consoleInstance.showConsole;
 
         Cursor.visible = consoleInstance.showConsole;
+
+        //Set mouse lockmode based on console visibility
         Cursor.lockState = consoleInstance.showConsole ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
 
@@ -49,7 +54,8 @@ public class GameConsole : MonoBehaviour
             SurvivalManager.GetPlayerReference().GetComponent<HealthStatistic>().SetHealth(setHP);
         });
 
-        var SPAWN_NPC = new ConsoleCommand<string>("npc_spawn", "Spawns an NPC by name input at raycast", (string name) =>
+        //DOESN'T WORK, this parameter command don't function as intended
+        /*var SPAWN_NPC = new ConsoleCommand<string>("npc_spawn", "Spawns an NPC by name input at raycast", (string name) =>
         {
             name = name.ToLower();
 
@@ -69,6 +75,21 @@ public class GameConsole : MonoBehaviour
                 if(Physics.Raycast(camera.position, camera.forward, out RaycastHit info, 32f ))
                     NPCSpawnpoint.spawnInstance.SpawnNPC(spawnType, info.transform);
             }
+        });*/
+
+        var NPC_SPAWN_BRAINLESS = new ConsoleCommand("npc_spawn_zombie", "Spawns the brainless NPC", () =>
+        {
+            SpawnNPCType(0);
+        });
+
+        var NPC_SPAWN_SLIME = new ConsoleCommand("npc_spawn_zombie", "Spawns the brainless NPC", () =>
+        {
+            SpawnNPCType(1);
+        });
+
+        var NPC_SPAWN_BRUTE = new ConsoleCommand("npc_spawn_zombie", "Spawns the brainless NPC", () =>
+        {
+            SpawnNPCType(2);
         });
 
         var PLAYER_GODMODE = new ConsoleCommand("godmode", "Makes the player immune to all forms of damage", () =>
@@ -82,9 +103,31 @@ public class GameConsole : MonoBehaviour
         {
             STOP_SPAWNING,
             SET_HEALTH,
-            SPAWN_NPC,
+            NPC_SPAWN_BRAINLESS,
+            NPC_SPAWN_SLIME,
+            NPC_SPAWN_BRUTE,
             PLAYER_GODMODE
         };
+    }
+
+    //Spawns an NPC at raycast
+    //Types are: 0 = Brainless, 1 = Slime, 2 = Brute
+    void SpawnNPCType(int type = 0)
+    {
+        var camera = Camera.main;
+        var playerTransform = SurvivalManager.GetPlayerReference().transform;
+
+        Vector3 forward = camera.transform.position + camera.transform.forward;
+
+        if (Physics.Raycast(camera.transform.position, forward, out RaycastHit hit, 999))
+        {
+            switch (type)
+            {
+                case 0: spawnInstance.SpawnNPC(NPCToSpawn.Brainless, hit.transform); break;
+                case 1: spawnInstance.SpawnNPC(NPCToSpawn.BioOrganic, hit.transform); break;
+                case 2: spawnInstance.SpawnNPC(NPCToSpawn.Brute, hit.transform); break;
+            }
+        }
     }
 
     //Prevents inputs from happening if true

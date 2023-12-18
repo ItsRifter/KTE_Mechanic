@@ -117,6 +117,15 @@ public class NPCNav : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets "canSeePlayer" and recalculates destination
+    /// </summary>
+    public void ResetAndRelocate()
+    {
+        eyeFOV.canSeePlayer = false;
+        shouldRecalculate = true;
+    }
+
     //Is the NPC near the player
     public bool IsNearPlayer()
     {
